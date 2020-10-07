@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining", "TextMining\TextMining.csproj", "{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.Services", "TextMining.Services\TextMining.Services.csproj", "{6579CE3D-9560-4938-8036-3AA16BBEFAED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
