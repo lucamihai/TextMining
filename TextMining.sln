@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30523.141
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining", "TextMining\TextMining.csproj", "{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E16B02F-D98D-4453-AB93-0A9B123DE07F}
+	EndGlobalSection
+EndGlobal
