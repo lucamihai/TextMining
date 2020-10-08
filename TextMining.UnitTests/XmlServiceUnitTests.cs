@@ -94,7 +94,7 @@ namespace TextMining.UnitTests
 
             var returnedValue = xmlService.GetTextFromAllElements(xDocument, Constants.TextTagName);
             
-            var expectedValue = Constants.ExpectedTextFromXmlFileFromTextElements.Replace("\r\n", "\n");
+            var expectedValue = Constants.TextFromXmlFileFromTextElements.Replace("\r\n", "\n");
             Assert.AreEqual(expectedValue, returnedValue);
         }
     }
