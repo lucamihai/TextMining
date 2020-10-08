@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using TextMining.Services;
 
 namespace TextMining
 {
-    class Program
+    [ExcludeFromCodeCoverage]
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var fileService = new FileService();
             var xmlService = new XmlService();

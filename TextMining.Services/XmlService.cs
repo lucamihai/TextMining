@@ -9,6 +9,11 @@ namespace TextMining.Services
     {
         public XDocument GetXDocumentFromText(string text)
         {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(text));
+            }
+
             return XDocument.Parse(text);
         }
 
