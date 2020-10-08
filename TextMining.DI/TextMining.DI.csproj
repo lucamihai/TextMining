@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
@@ -10,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TextMining.DI\TextMining.DI.csproj" />
+    <ProjectReference Include="..\TextMining.BusinessLogic\TextMining.BusinessLogic.csproj" />
     <ProjectReference Include="..\TextMining.Services\TextMining.Services.csproj" />
   </ItemGroup>
 

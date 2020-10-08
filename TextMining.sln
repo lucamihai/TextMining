@@ -9,9 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Services", "Text
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{96F69F57-C56F-4473-9B7C-6A6CD297C7E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.UnitTests", "TextMining.UnitTests\TextMining.UnitTests.csproj", "{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.UnitTests", "TextMining.UnitTests\TextMining.UnitTests.csproj", "{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.Tests.Common", "TextMining.Tests.Common\TextMining.Tests.Common.csproj", "{39A86C79-0FCA-477D-B221-DBE9950B614D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Tests.Common", "TextMining.Tests.Common\TextMining.Tests.Common.csproj", "{39A86C79-0FCA-477D-B221-DBE9950B614D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.BusinessLogic", "TextMining.BusinessLogic\TextMining.BusinessLogic.csproj", "{820BF14C-D3D4-4DBA-B2BE-FB18A32E26DF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.DI", "TextMining.DI\TextMining.DI.csproj", "{5A62077C-FD5A-4061-88F9-8907D9340221}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,14 @@ Global
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{820BF14C-D3D4-4DBA-B2BE-FB18A32E26DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{820BF14C-D3D4-4DBA-B2BE-FB18A32E26DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{820BF14C-D3D4-4DBA-B2BE-FB18A32E26DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{820BF14C-D3D4-4DBA-B2BE-FB18A32E26DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A62077C-FD5A-4061-88F9-8907D9340221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A62077C-FD5A-4061-88F9-8907D9340221}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A62077C-FD5A-4061-88F9-8907D9340221}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A62077C-FD5A-4061-88F9-8907D9340221}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

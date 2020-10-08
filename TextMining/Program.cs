@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.DependencyInjection;
+using TextMining.BusinessLogic.Interfaces;
+using TextMining.DI;
 using TextMining.Services;
+using TextMining.Services.Interfaces;
 
 namespace TextMining
 {
@@ -9,18 +13,14 @@ namespace TextMining
     {
         private static void Main(string[] args)
         {
-            var fileService = new FileService();
-            var xmlService = new XmlService();
-            var textAnalyzer = new TextAnalyzer();
-            var formatter = new Formatter();
+            var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
+            var textMiningBusinessLogic = serviceProvider.GetService<ITextMiningBusinessLogic>();
+            var formatter = serviceProvider.GetService<IFormatter>();
 
             // TODO: Get filepath from command line OR make filepath relative
             const string filepath = @"D:\Projects\TextMining\Resources\Reuters_34\Training\2504NEWS.XML";
 
-            var fileText = fileService.GetAllTextFromFile(filepath);
-            var xDocument = xmlService.GetXDocumentFromText(fileText);
-            var text = xmlService.GetTextFromAllElements(xDocument, "text");
-            var wordFrequencies = textAnalyzer.GetWordFrequenciesFromText(text);
+            var wordFrequencies = textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(filepath);
             var resultAsString = formatter.GetStringForWordFrequencies(wordFrequencies);
 
             Console.WriteLine(resultAsString);
