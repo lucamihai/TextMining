@@ -4,9 +4,8 @@ using System.Xml;
 using System.Xml.Linq;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextMining.Services;
 
-namespace TextMining.UnitTests
+namespace TextMining.Services.UnitTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]

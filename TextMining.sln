@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Services", "Text
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{96F69F57-C56F-4473-9B7C-6A6CD297C7E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.UnitTests", "TextMining.UnitTests\TextMining.UnitTests.csproj", "{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Tests.Common", "TextMining.Tests.Common\TextMining.Tests.Common.csproj", "{39A86C79-0FCA-477D-B221-DBE9950B614D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.BusinessLogic", "TextMining.BusinessLogic\TextMining.BusinessLogic.csproj", "{820BF14C-D3D4-4DBA-B2BE-FB18A32E26DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.BusinessLogic", "TextMining.BusinessLogic\TextMining.BusinessLogic.csproj", "{820BF14C-D3D4-4DBA-B2BE-FB18A32E26DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.DI", "TextMining.DI\TextMining.DI.csproj", "{5A62077C-FD5A-4061-88F9-8907D9340221}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.DI", "TextMining.DI\TextMining.DI.csproj", "{5A62077C-FD5A-4061-88F9-8907D9340221}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.Services.UnitTests", "TextMining.Services.UnitTests\TextMining.Services.UnitTests.csproj", "{98A094C3-B0D5-42F3-A916-B66FDB9174E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,13 +43,17 @@ Global
 		{5A62077C-FD5A-4061-88F9-8907D9340221}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A62077C-FD5A-4061-88F9-8907D9340221}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A62077C-FD5A-4061-88F9-8907D9340221}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98A094C3-B0D5-42F3-A916-B66FDB9174E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A094C3-B0D5-42F3-A916-B66FDB9174E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A094C3-B0D5-42F3-A916-B66FDB9174E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A094C3-B0D5-42F3-A916-B66FDB9174E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{34BF3DA5-2D5A-4D48-B279-B8CBB4099D6E} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 		{39A86C79-0FCA-477D-B221-DBE9950B614D} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
+		{98A094C3-B0D5-42F3-A916-B66FDB9174E8} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E16B02F-D98D-4453-AB93-0A9B123DE07F}

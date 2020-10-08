@@ -2,9 +2,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TextMining.Services;
 
-namespace TextMining.UnitTests
+namespace TextMining.Services.UnitTests
 {
     [TestClass]
     [ExcludeFromCodeCoverage]

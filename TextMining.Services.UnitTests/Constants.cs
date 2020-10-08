@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TextMining.UnitTests
+namespace TextMining.Services.UnitTests
 {
     [ExcludeFromCodeCoverage]
     public static class Constants
