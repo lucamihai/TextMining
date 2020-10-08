@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TextMining.Tests.Common;
 
 namespace TextMining.Services.UnitTests
 {

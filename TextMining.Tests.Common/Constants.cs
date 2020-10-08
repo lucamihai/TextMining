@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TextMining.Services.UnitTests
+namespace TextMining.Tests.Common
 {
     [ExcludeFromCodeCoverage]
     public static class Constants
     {
-        public static readonly string TestFileName = "TestFile.txt";
+        public static readonly string TestFileName = "TestFile.xml";
 
         public static readonly string XmlFileText =
 @"<?xml version=""1.0"" encoding=""iso-8859-1"" ?>

@@ -4,7 +4,7 @@ using System.IO;
 namespace TextMining.Tests.Common
 {
     [ExcludeFromCodeCoverage]
-    public class Cleanup
+    public static class Cleanup
     {
         public static void DeleteFileIfExists(string filepath)
         {

@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.Services.UnitTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.BusinessLogic.UnitTests", "TextMining.BusinessLogic.UnitTests\TextMining.BusinessLogic.UnitTests.csproj", "{1AE53BB4-6846-4AB4-94AB-37A138232F37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.BusinessLogic.IntegrationTests", "TextMining.BusinessLogic.IntegrationTests\TextMining.BusinessLogic.IntegrationTests.csproj", "{D462898B-FC90-46EE-8319-592C72D5F6AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{1AE53BB4-6846-4AB4-94AB-37A138232F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AE53BB4-6846-4AB4-94AB-37A138232F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AE53BB4-6846-4AB4-94AB-37A138232F37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D462898B-FC90-46EE-8319-592C72D5F6AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D462898B-FC90-46EE-8319-592C72D5F6AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D462898B-FC90-46EE-8319-592C72D5F6AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D462898B-FC90-46EE-8319-592C72D5F6AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{39A86C79-0FCA-477D-B221-DBE9950B614D} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 		{98A094C3-B0D5-42F3-A916-B66FDB9174E8} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 		{1AE53BB4-6846-4AB4-94AB-37A138232F37} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
+		{D462898B-FC90-46EE-8319-592C72D5F6AC} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E16B02F-D98D-4453-AB93-0A9B123DE07F}
