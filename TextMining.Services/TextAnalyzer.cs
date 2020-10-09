@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TextMining.Services.Interfaces;
 
 namespace TextMining.Services
@@ -20,7 +21,7 @@ namespace TextMining.Services
                 {
                     currentWord += character;
                 }
-                else if (currentWord.Length != 0)
+                else
                 {
                     OnWordEnded(ref currentWord, wordFrequencies);
                 }
@@ -50,15 +51,29 @@ namespace TextMining.Services
                    || (character >= 'A' && character <= 'Z');
         }
 
+        private static bool IsValidWord(string word)
+        {
+            return word.Length != 0
+                   && StringHasAtLeastOneLetter(word);
+        }
+
+        private static bool StringHasAtLeastOneLetter(string value)
+        {
+            return value.Any(CharacterIsALetter);
+        }
+
         private static void OnWordEnded(ref string word, Dictionary<string, int> wordFrequencies)
         {
-            if (wordFrequencies.ContainsKey(word))
+            if (IsValidWord(word))
             {
-                wordFrequencies[word]++;
-            }
-            else
-            {
-                wordFrequencies.Add(word, 1);
+                if (wordFrequencies.ContainsKey(word))
+                {
+                    wordFrequencies[word]++;
+                }
+                else
+                {
+                    wordFrequencies.Add(word, 1);
+                }
             }
 
             word = string.Empty;
