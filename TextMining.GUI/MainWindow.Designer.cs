@@ -1,6 +1,6 @@
 ﻿namespace TextMining.GUI
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         ///  Required designer variable.
@@ -90,7 +90,7 @@
             this.textBoxResult.Multiline = true;
             this.textBoxResult.Name = "textBoxResult";
             this.textBoxResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxResult.Size = new System.Drawing.Size(265, 239);
+            this.textBoxResult.Size = new System.Drawing.Size(746, 239);
             this.textBoxResult.TabIndex = 4;
             // 
             // label3
@@ -116,7 +116,7 @@
             this.Controls.Add(this.textBoxFilepath);
             this.Controls.Add(this.buttonLoadFile);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Text Mining";
             this.ResumeLayout(false);
             this.PerformLayout();
 
