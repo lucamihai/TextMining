@@ -6,7 +6,7 @@ using TextMining.Services.Interfaces;
 
 namespace TextMining.Services
 {
-    public class Formatter : IFormatter
+    public class ResultFormatter : IResultFormatter
     {
         public string GetStringForWordFrequencies(Dictionary<string, int> wordFrequencies)
         {

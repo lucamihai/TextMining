@@ -2,7 +2,7 @@
 
 namespace TextMining.Services.Interfaces
 {
-    public interface IFormatter
+    public interface IResultFormatter
     {
         string GetStringForWordFrequencies(Dictionary<string, int> wordFrequencies);
     }

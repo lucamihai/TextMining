@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.DI;
-using TextMining.Services;
 using TextMining.Services.Interfaces;
 
 namespace TextMining
@@ -15,7 +14,7 @@ namespace TextMining
         {
             var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
             var textMiningBusinessLogic = serviceProvider.GetService<ITextMiningBusinessLogic>();
-            var formatter = serviceProvider.GetService<IFormatter>();
+            var formatter = serviceProvider.GetService<IResultFormatter>();
 
             // TODO: Get filepath from command line OR make filepath relative
             const string filepath = @"D:\Projects\TextMining\Resources\Reuters_34\Training\2504NEWS.XML";

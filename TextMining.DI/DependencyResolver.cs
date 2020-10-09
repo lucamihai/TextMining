@@ -16,7 +16,7 @@ namespace TextMining.DI
 
             services.AddScoped<ITextMiningBusinessLogic, TextMiningBusinessLogic>();
             services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IFormatter, Formatter>();
+            services.AddScoped<IResultFormatter, ResultFormatter>();
             services.AddScoped<ITextAnalyzer, TextAnalyzer>();
             services.AddScoped<IXmlService, XmlService>();
 
