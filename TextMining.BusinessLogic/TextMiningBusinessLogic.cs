@@ -1,33 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using TextMining.BusinessLogic.Interfaces;
-using TextMining.Services.Interfaces;
+using TextMining.Entities;
+using TextMining.Providers.Interfaces;
 
 namespace TextMining.BusinessLogic
 {
     public class TextMiningBusinessLogic : ITextMiningBusinessLogic
     {
-        private readonly IFileService fileService;
-        private readonly IXmlService xmlService;
-        private readonly ITextAnalyzer textAnalyzer;
+        private readonly IDocumentDataProvider documentDataProvider;
 
-        public TextMiningBusinessLogic(IFileService fileService, IXmlService xmlService, ITextAnalyzer textAnalyzer)
+        public TextMiningBusinessLogic(IDocumentDataProvider documentDataProvider)
         {
-            this.fileService = fileService;
-            this.xmlService = xmlService;
-            this.textAnalyzer = textAnalyzer;
+            this.documentDataProvider = documentDataProvider;
         }
 
-        public Dictionary<string, int> GetWordFrequenciesFromXmlFile(string filepath)
+        public DocumentData GetDocumentDataFromXmlFile(string filepath)
         {
             ValidateString(filepath);
 
-            var fileText = fileService.GetAllTextFromFile(filepath);
-            var xDocument = xmlService.GetXDocumentFromText(fileText);
-            var text = xmlService.GetTextFromAllElements(xDocument, "text");
-            var wordFrequencies = textAnalyzer.GetWordFrequenciesFromText(text);
-
-            return wordFrequencies;
+            return documentDataProvider.GetDocumentDataFromXmlFile(filepath);
         }
 
         private void ValidateString(string value)

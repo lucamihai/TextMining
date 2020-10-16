@@ -28,24 +28,13 @@ namespace TextMining.Services.UnitTests
         }
 
         [TestMethod]
+        [DataRow(Constants.NullString, DisplayName = "Null string")]
+        [DataRow(Constants.EmptyString, DisplayName = "Empty string")]
+        [DataRow(Constants.OnlyWhitespacesString, DisplayName = "Only whitespaces string")]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenTextIsNullGetWordFrequenciesFromTextThrowsArgumentException()
+        public void TestThatWhenTextIsNotValidGetWordFrequenciesFromTextThrowsArgumentException(string filepath)
         {
-            textAnalyzer.GetWordFrequenciesFromText(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenTextIsEmptyGetWordFrequenciesFromTextThrowsArgumentException()
-        {
-            textAnalyzer.GetWordFrequenciesFromText(string.Empty);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenTextHasOnlyWhitespacesGetWordFrequenciesFromTextThrowsArgumentException()
-        {
-            textAnalyzer.GetWordFrequenciesFromText("  \t ");
+            textAnalyzer.GetWordFrequenciesFromText(filepath);
         }
 
         [TestMethod]

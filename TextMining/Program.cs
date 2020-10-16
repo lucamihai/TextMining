@@ -19,7 +19,8 @@ namespace TextMining
             // TODO: Get filepath from command line OR make filepath relative
             const string filepath = @"D:\Projects\TextMining\Resources\Reuters_34\Training\2504NEWS.XML";
 
-            var wordFrequencies = textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(filepath);
+            var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
+            var wordFrequencies = documentData.WordDictionary;
             var resultAsString = formatter.GetStringForWordFrequencies(wordFrequencies);
 
             Console.WriteLine(resultAsString);

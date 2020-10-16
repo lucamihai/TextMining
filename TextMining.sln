@@ -15,13 +15,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.BusinessLogic", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.DI", "TextMining.DI\TextMining.DI.csproj", "{5A62077C-FD5A-4061-88F9-8907D9340221}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.Services.UnitTests", "TextMining.Services.UnitTests\TextMining.Services.UnitTests.csproj", "{98A094C3-B0D5-42F3-A916-B66FDB9174E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Services.UnitTests", "TextMining.Services.UnitTests\TextMining.Services.UnitTests.csproj", "{98A094C3-B0D5-42F3-A916-B66FDB9174E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.BusinessLogic.UnitTests", "TextMining.BusinessLogic.UnitTests\TextMining.BusinessLogic.UnitTests.csproj", "{1AE53BB4-6846-4AB4-94AB-37A138232F37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.BusinessLogic.UnitTests", "TextMining.BusinessLogic.UnitTests\TextMining.BusinessLogic.UnitTests.csproj", "{1AE53BB4-6846-4AB4-94AB-37A138232F37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.BusinessLogic.IntegrationTests", "TextMining.BusinessLogic.IntegrationTests\TextMining.BusinessLogic.IntegrationTests.csproj", "{D462898B-FC90-46EE-8319-592C72D5F6AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.BusinessLogic.IntegrationTests", "TextMining.BusinessLogic.IntegrationTests\TextMining.BusinessLogic.IntegrationTests.csproj", "{D462898B-FC90-46EE-8319-592C72D5F6AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.GUI", "TextMining.GUI\TextMining.GUI.csproj", "{14A29D56-5AA0-44C2-881A-2A10CA9622CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.GUI", "TextMining.GUI\TextMining.GUI.csproj", "{14A29D56-5AA0-44C2-881A-2A10CA9622CA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Entities", "TextMining.Entities\TextMining.Entities.csproj", "{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Providers", "TextMining.Providers\TextMining.Providers.csproj", "{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.Providers.UnitTests", "TextMining.Providers.UnitTests\TextMining.Providers.UnitTests.csproj", "{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +71,18 @@ Global
 		{14A29D56-5AA0-44C2-881A-2A10CA9622CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14A29D56-5AA0-44C2-881A-2A10CA9622CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14A29D56-5AA0-44C2-881A-2A10CA9622CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +92,7 @@ Global
 		{98A094C3-B0D5-42F3-A916-B66FDB9174E8} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 		{1AE53BB4-6846-4AB4-94AB-37A138232F37} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 		{D462898B-FC90-46EE-8319-592C72D5F6AC} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
+		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8} = {96F69F57-C56F-4473-9B7C-6A6CD297C7E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8E16B02F-D98D-4453-AB93-0A9B123DE07F}

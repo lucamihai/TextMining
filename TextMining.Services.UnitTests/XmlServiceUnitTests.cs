@@ -24,29 +24,18 @@ namespace TextMining.Services.UnitTests
         }
 
         [TestMethod]
+        [DataRow(Constants.NullString, DisplayName = "Null string")]
+        [DataRow(Constants.EmptyString, DisplayName = "Empty string")]
+        [DataRow(Constants.OnlyWhitespacesString, DisplayName = "Only whitespaces string")]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenTextIsNullGetXDocumentFromTextThrowsArgumentException()
+        public void TestThatWhenTextIsNotValidGetXDocumentFromTextThrowsArgumentException(string text)
         {
-            xmlService.GetXDocumentFromText(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenTextIsEmptyGetXDocumentFromTextThrowsArgumentException()
-        {
-            xmlService.GetXDocumentFromText(string.Empty);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenTextHasOnlyWhitespacesGetXDocumentFromTextThrowsArgumentException()
-        {
-            xmlService.GetXDocumentFromText("  \t ");
+            xmlService.GetXDocumentFromText(text);
         }
 
         [TestMethod]
         [ExpectedException(typeof(XmlException))]
-        public void TestThatWhenTextIsInvalidGetXDocumentFromTextThrowsXmlException()
+        public void TestThatWhenTextIsNotValidXmlTextGetXDocumentFromTextThrowsXmlException()
         {
             xmlService.GetXDocumentFromText("abc");
         }
@@ -60,6 +49,28 @@ namespace TextMining.Services.UnitTests
         }
 
         [TestMethod]
+        [DataRow(Constants.NullString, DisplayName = "Null string")]
+        [DataRow(Constants.EmptyString, DisplayName = "Empty string")]
+        [DataRow(Constants.OnlyWhitespacesString, DisplayName = "Only whitespaces string")]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestThatWhenFilepathIsNotValidGetXDocumentFromFileThrowsArgumentException(string filepath)
+        {
+            xmlService.GetXDocumentFromFile(filepath);
+        }
+
+        [TestMethod]
+        public void TestThatGetXDocumentFromFileReturnsExpectedXDocument()
+        {
+            var filepath = Constants.TestFileName;
+            Tests.Common.Setup.CreateFileWithText(filepath, Constants.XmlFileText);
+
+            var xDocument = xmlService.GetXDocumentFromFile(filepath);
+
+            Cleanup.DeleteFileIfExists(filepath);
+            Assert.IsNotNull(xDocument);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestThatWhenXmlDocumentIsNullGetTextFromAllElementsThrowsArgumentNullException()
         {
@@ -67,24 +78,13 @@ namespace TextMining.Services.UnitTests
         }
 
         [TestMethod]
+        [DataRow(Constants.NullString, DisplayName = "Null string")]
+        [DataRow(Constants.EmptyString, DisplayName = "Empty string")]
+        [DataRow(Constants.OnlyWhitespacesString, DisplayName = "Only whitespaces string")]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenElementNameIsNullGetTextFromAllElementsThrowsArgumentException()
+        public void TestThatWhenElementNameIsNotValidGetTextFromAllElementsThrowsArgumentException(string elementName)
         {
-            xmlService.GetTextFromAllElements(new XDocument(), null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenElementNameIsEmptyGetTextFromAllElementsThrowsArgumentException()
-        {
-            xmlService.GetTextFromAllElements(new XDocument(), string.Empty);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenElementNameHasOnlyWhitespacesGetTextFromAllElementsThrowsArgumentException()
-        {
-            xmlService.GetTextFromAllElements(new XDocument(), "  \t ");
+            xmlService.GetTextFromAllElements(new XDocument(), elementName);
         }
 
         [TestMethod]
@@ -96,6 +96,34 @@ namespace TextMining.Services.UnitTests
             
             var expectedValue = Constants.TextFromXmlFileFromTextElements.Replace("\r\n", "\n");
             Assert.AreEqual(expectedValue, returnedValue);
+        }
+
+        [TestMethod]
+        public void TestThatGetTextFromAllElementsReturnsExpectedValue2()
+        {
+            var xDocument = XDocument.Parse(Constants.XmlFileText);
+
+            var returnedValue = xmlService.GetTextFromAllElements(xDocument, Constants.ParagraphTagName);
+
+            var expectedValue = Constants.ExpectedTextFromXmlFileFromParagraphElements.Replace("\r\n", "\n");
+            Assert.AreEqual(expectedValue, returnedValue);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestThatWhenXDocumentIsNullGetCodesFromXDocumentThrowsArgumentNullException()
+        {
+            xmlService.GetCodesFromXDocument(null);
+        }
+
+        [TestMethod]
+        public void TestThatGetCodesFromXDocumentReturnsExpectedValue()
+        {
+            var xDocument = XDocument.Parse(Constants.XmlFileText);
+
+            var returnedValue = xmlService.GetCodesFromXDocument(xDocument);
+
+            Assert.IsTrue(comparer.Compare(Constants.CodesFromXml, returnedValue).AreEqual);
         }
     }
 }

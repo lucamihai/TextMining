@@ -1,85 +1,54 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.IO;
+using System.Linq;
 using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
-using TextMining.BusinessLogic.Interfaces;
-using TextMining.DI;
-using TextMining.Services.Interfaces;
+using TextMining.GUI.UserControls;
 
 namespace TextMining.GUI
 {
     [ExcludeFromCodeCoverage]
     public partial class MainWindow : Form
     {
-        private readonly ITextMiningBusinessLogic textMiningBusinessLogic;
-        private readonly IResultFormatter resultFormatter;
+        private UserControl activeUserControl;
+        private readonly List<RadioButton> radioButtonsUserControlSelection;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
-            textMiningBusinessLogic = serviceProvider.GetService<ITextMiningBusinessLogic>();
-            resultFormatter = serviceProvider.GetService<IResultFormatter>();
+            activeUserControl = new UserControl();
+            panelActiveUserControl.Controls.Add(activeUserControl);
 
-            UpdateRunButtonEnabledProperty();
-            SetStatusLabel("Waiting for input", Color.DodgerBlue);
-        }
+            radioButtonsUserControlSelection = panelUserControlSelection
+                .Controls
+                .OfType<RadioButton>()
+                .ToList();
 
-        private void buttonLoadFile_Click(object sender, EventArgs e)
-        {
-            using var openFileDialog = new OpenFileDialog
+            foreach (var radioButton in radioButtonsUserControlSelection)
             {
-                Title = "Browse files",
-
-                CheckFileExists = true,
-                CheckPathExists = true,
-
-                DefaultExt = "xml",
-                Filter = "XML files (*.xml)|*.xml",
-                FilterIndex = 2,
-                RestoreDirectory = true,
-
-                ReadOnlyChecked = true,
-                ShowReadOnly = true
-            };
-
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBoxFilepath.Text = openFileDialog.FileName;
-                SetStatusLabel("File loaded", Color.DodgerBlue);
+                radioButton.CheckedChanged += RadioButtonOnCheckedChanged;
             }
 
-            UpdateRunButtonEnabledProperty();
+            radioButtonUserControlWordFrequency.Checked = true;
         }
 
-        private void buttonRun_Click(object sender, EventArgs e)
+        private void RadioButtonOnCheckedChanged(object? sender, EventArgs e)
         {
-            try
+            var selectedRadioButton = radioButtonsUserControlSelection.First(x => x.Checked);
+
+            if (selectedRadioButton == radioButtonUserControlWordFrequency)
             {
-                var wordFrequencies = textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(textBoxFilepath.Text);
-                textBoxResult.Text = resultFormatter.GetStringForWordFrequencies(wordFrequencies);
+                activeUserControl = new WordFrequencyUserControl();
+            }
 
-                SetStatusLabel("Done", Color.GreenYellow);
-            }
-            catch (Exception exception)
-            {
-                SetStatusLabel("Error", Color.Red);
-                textBoxResult.Text = exception.ToString();
-            }
+            UpdatePanelActiveUserControl();
         }
 
-        private void UpdateRunButtonEnabledProperty()
+        private void UpdatePanelActiveUserControl()
         {
-            buttonRun.Enabled = !string.IsNullOrWhiteSpace(textBoxFilepath.Text) && File.Exists(textBoxFilepath.Text);
-        }
-
-        private void SetStatusLabel(string text, Color color)
-        {
-            labelStatus.Text = text;
-            labelStatus.ForeColor = color;
+            panelActiveUserControl.Controls.Clear();
+            panelActiveUserControl.Controls.Add(activeUserControl);
         }
     }
 }

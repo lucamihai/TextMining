@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic;
 using TextMining.BusinessLogic.Interfaces;
+using TextMining.Providers;
+using TextMining.Providers.Interfaces;
 using TextMining.Services;
 using TextMining.Services.Interfaces;
 
@@ -15,6 +17,9 @@ namespace TextMining.DI
             var services = new ServiceCollection();
 
             services.AddScoped<ITextMiningBusinessLogic, TextMiningBusinessLogic>();
+
+            services.AddScoped<IDocumentDataProvider, DocumentDataProvider>();
+
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IResultFormatter, ResultFormatter>();
             services.AddScoped<ITextAnalyzer, TextAnalyzer>();

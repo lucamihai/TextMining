@@ -36,11 +36,12 @@ namespace TextMining.BusinessLogic.IntegrationTests
         }
 
         [TestMethod]
-        public void TestThatGetWordFrequenciesFromXmlFileReturnsExpectedWordFrequencies()
+        public void TestThatGetWordFrequenciesFromXmlFileReturnsExpectedDocumentData()
         {
-            var wordFrequencies = textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(filepath);
+            var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
 
-            Assert.IsTrue(compareLogic.Compare(Constants.WordFrequenciesFromText, wordFrequencies).AreEqual);
+            Assert.IsTrue(compareLogic.Compare(Constants.WordFrequenciesFromText, documentData.WordDictionary).AreEqual);
+            Assert.IsTrue(compareLogic.Compare(Constants.CodesFromXml, documentData.Topics).AreEqual);
         }
 
         [TestCleanup]

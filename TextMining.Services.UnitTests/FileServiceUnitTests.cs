@@ -25,24 +25,13 @@ namespace TextMining.Services.UnitTests
         }
 
         [TestMethod]
+        [DataRow(Constants.NullString, DisplayName = "Null string")]
+        [DataRow(Constants.EmptyString, DisplayName = "Empty string")]
+        [DataRow(Constants.OnlyWhitespacesString, DisplayName = "Only whitespaces string")]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenFilepathIsNullGetAllTextFromFileThrowsArgumentException()
+        public void TestThatWhenFilepathIsNotValidGetAllTextFromFileThrowsArgumentException(string filepathArgument)
         {
-            fileService.GetAllTextFromFile(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenFilepathIsEmptyGetAllTextFromFileThrowsArgumentException()
-        {
-            fileService.GetAllTextFromFile(string.Empty);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenFilepathHasOnlyWhitespacesGetAllTextFromFileThrowsArgumentException()
-        {
-            fileService.GetAllTextFromFile("  \t ");
+            fileService.GetAllTextFromFile(filepathArgument);
         }
 
         [TestMethod]

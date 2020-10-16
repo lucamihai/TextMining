@@ -1,9 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using TextMining.Services.Interfaces;
+using TextMining.Providers.Interfaces;
+using TextMining.Tests.Common;
 
 namespace TextMining.BusinessLogic.UnitTests
 {
@@ -12,108 +12,35 @@ namespace TextMining.BusinessLogic.UnitTests
     public class TextMiningBusinessLogicUnitTests
     {
         private TextMiningBusinessLogic textMiningBusinessLogic;
-        private Mock<IFileService> fileServiceMock;
-        private Mock<IXmlService> xmlServiceMock;
-        private Mock<ITextAnalyzer> textAnalyzerMock;
-
-        private string textReturnedByFileService;
-        private XDocument xDocumentReturnedByXmlService;
-        private string textReturnedByXmlService;
+        private Mock<IDocumentDataProvider> documentDataProviderMock;
 
         [TestInitialize]
         public void Setup()
         {
-            fileServiceMock = new Mock<IFileService>();
-            xmlServiceMock = new Mock<IXmlService>();
-            textAnalyzerMock = new Mock<ITextAnalyzer>();
+            documentDataProviderMock = new Mock<IDocumentDataProvider>();
 
-            textMiningBusinessLogic = new TextMiningBusinessLogic(fileServiceMock.Object, xmlServiceMock.Object, textAnalyzerMock.Object);
-
-            SetupFileServiceMock();
-            SetupXmlServiceMock();
+            textMiningBusinessLogic = new TextMiningBusinessLogic(documentDataProviderMock.Object);
         }
 
         [TestMethod]
+        [DataRow(Constants.NullString, DisplayName = "Null string")]
+        [DataRow(Constants.EmptyString, DisplayName = "Empty string")]
+        [DataRow(Constants.OnlyWhitespacesString, DisplayName = "Only whitespaces string")]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenFilepathIsNullGetWordFrequenciesFromXmlFileThrowsArgumentException()
+        public void TestThatWhenFilepathIsNotValidGetDocumentDataFromXmlFileThrowsArgumentException(string filepath)
         {
-            textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(null);
+            textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenFilepathIsEmptyGetWordFrequenciesFromXmlFileThrowsArgumentException()
-        {
-            textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(string.Empty);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestThatWhenFilepathHasOnlyWhitespacesGetWordFrequenciesFromXmlFileThrowsArgumentException()
-        {
-            textMiningBusinessLogic.GetWordFrequenciesFromXmlFile("  \t ");
-        }
-
-        [TestMethod]
-        public void TestThatGetWordFrequenciesFromXmlFileCallsFileServiceGetAllTextFromFileOnce()
+        public void TestThatGetDocumentDataFromXmlFileCallsDocumentDataProviderGetDocumentDataFromXmlFileOnce()
         {
             const string filepath = "abc.txt";
 
-            textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(filepath);
+            textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
 
-            fileServiceMock.Verify(x => x.GetAllTextFromFile(filepath), Times.Once);
+            documentDataProviderMock.Verify(x => x.GetDocumentDataFromXmlFile(filepath), Times.Once);
         }
 
-        [TestMethod]
-        public void TestThatGetWordFrequenciesFromXmlFileCallsXmlServiceGetXDocumentFromTextOnce()
-        {
-            const string filepath = "abc.txt";
-
-            textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(filepath);
-
-            xmlServiceMock.Verify(x => x.GetXDocumentFromText(textReturnedByFileService), Times.Once);
-        }
-
-        [TestMethod]
-        public void TestThatGetWordFrequenciesFromXmlFileCallsXmlServiceGetTextFromAllElementsOnce()
-        {
-            const string filepath = "abc.txt";
-            const string tagName = "text";
-
-            textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(filepath);
-
-            xmlServiceMock.Verify(x => x.GetTextFromAllElements(xDocumentReturnedByXmlService, tagName, null), Times.Once);
-        }
-
-        [TestMethod]
-        public void TestThatGetWordFrequenciesFromXmlFileCallsTextAnalyzerGetWordFrequenciesFromTextOnce()
-        {
-            const string filepath = "abc.txt";
-
-            textMiningBusinessLogic.GetWordFrequenciesFromXmlFile(filepath);
-
-            textAnalyzerMock.Verify(x => x.GetWordFrequenciesFromText(textReturnedByXmlService), Times.Once);
-        }
-
-        private void SetupFileServiceMock()
-        {
-            textReturnedByFileService = "<p>abc</p>";
-            fileServiceMock
-                .Setup(x => x.GetAllTextFromFile(It.IsAny<string>()))
-                .Returns(textReturnedByFileService);
-        }
-
-        private void SetupXmlServiceMock()
-        {
-            xDocumentReturnedByXmlService = new XDocument();
-            xmlServiceMock
-                .Setup(x => x.GetXDocumentFromText(It.IsAny<string>()))
-                .Returns(xDocumentReturnedByXmlService);
-
-            textReturnedByXmlService = "abc";
-            xmlServiceMock
-                .Setup(x => x.GetTextFromAllElements(It.IsAny<XDocument>(), It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(textReturnedByXmlService);
-        }
     }
 }

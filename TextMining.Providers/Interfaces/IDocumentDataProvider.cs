@@ -1,8 +1,8 @@
 ﻿using TextMining.Entities;
 
-namespace TextMining.BusinessLogic.Interfaces
+namespace TextMining.Providers.Interfaces
 {
-    public interface ITextMiningBusinessLogic
+    public interface IDocumentDataProvider
     {
         DocumentData GetDocumentDataFromXmlFile(string filepath);
     }
