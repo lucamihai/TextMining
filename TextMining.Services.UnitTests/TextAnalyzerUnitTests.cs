@@ -34,16 +34,16 @@ namespace TextMining.Services.UnitTests
         [ExpectedException(typeof(ArgumentException))]
         public void TestThatWhenTextIsNotValidGetWordFrequenciesFromTextThrowsArgumentException(string filepath)
         {
-            textAnalyzer.GetWordFrequenciesFromText(filepath);
+            textAnalyzer.GetTextDataFromText(filepath);
         }
 
         [TestMethod]
-        public void TestThatGetWordFrequenciesFromTextReturnsExpectedWordFrequencies()
+        public void TestThatGetWordFrequenciesFromTextReturnsExpectedTextData()
         {
-            var wordFrequencies = textAnalyzer.GetWordFrequenciesFromText(Constants.TextFromXmlFileFromTextElements);
+            var textData = textAnalyzer.GetTextDataFromText(Constants.TextFromXmlFileFromTextElements);
 
-            var expectedWordFrequencies = Constants.WordFrequenciesFromText;
-            Assert.IsTrue(compareLogic.Compare(expectedWordFrequencies, wordFrequencies).AreEqual);
+            Assert.IsTrue(compareLogic.Compare(Constants.WordFrequenciesFromText, textData.WordDictionary).AreEqual);
+            Assert.IsTrue(compareLogic.Compare(Constants.AcronymFrequenciesFromText, textData.AcronymDictionary).AreEqual);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace TextMining
             const string filepath = @"D:\Projects\TextMining\Resources\Reuters_34\Training\2504NEWS.XML";
 
             var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
-            var wordFrequencies = documentData.WordDictionary;
+            var wordFrequencies = documentData.TextData.WordDictionary;
             var resultAsString = formatter.GetStringForWordFrequencies(wordFrequencies);
 
             Console.WriteLine(resultAsString);

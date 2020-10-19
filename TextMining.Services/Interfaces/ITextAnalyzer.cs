@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using TextMining.Entities;
 
 namespace TextMining.Services.Interfaces
 {
     public interface ITextAnalyzer
     {
-        Dictionary<string, int> GetWordFrequenciesFromText(string text);
+        TextData GetTextDataFromText(string text);
     }
 }

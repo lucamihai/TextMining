@@ -40,8 +40,10 @@ namespace TextMining.BusinessLogic.IntegrationTests
         {
             var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
 
-            Assert.IsTrue(compareLogic.Compare(Constants.WordFrequenciesFromText, documentData.WordDictionary).AreEqual);
+            Assert.IsTrue(compareLogic.Compare(Constants.DocumentTitle, documentData.Title).AreEqual);
             Assert.IsTrue(compareLogic.Compare(Constants.CodesFromXml, documentData.Topics).AreEqual);
+            Assert.IsTrue(compareLogic.Compare(Constants.WordFrequenciesFromText, documentData.TextData.WordDictionary).AreEqual);
+            Assert.IsTrue(compareLogic.Compare(Constants.AcronymFrequenciesFromText, documentData.TextData.AcronymDictionary).AreEqual);
         }
 
         [TestCleanup]

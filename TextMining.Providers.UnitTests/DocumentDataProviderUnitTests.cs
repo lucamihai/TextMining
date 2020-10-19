@@ -68,7 +68,7 @@ namespace TextMining.Providers.UnitTests
 
             documentDataProvider.GetDocumentDataFromXmlFile(filepath);
 
-            textAnalyzerMock.Verify(x => x.GetWordFrequenciesFromText(textReturnedByXmlService), Times.Once);
+            textAnalyzerMock.Verify(x => x.GetTextDataFromText(textReturnedByXmlService), Times.Once);
         }
 
         private void SetupXmlServiceMock()

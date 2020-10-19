@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 using TextMining.Entities;
 using TextMining.Providers.Interfaces;
@@ -27,7 +26,7 @@ namespace TextMining.Providers
             return new DocumentData
             {
                 Title = GetTitleFromXDocument(xDocument),
-                WordDictionary = GetWordDictionaryFromXDocument(xDocument),
+                TextData = GetTextDataFromXDocument(xDocument),
                 Topics = xmlService.GetCodesFromXDocument(xDocument)
             };
         }
@@ -41,11 +40,11 @@ namespace TextMining.Providers
                 : title;
         }
 
-        private Dictionary<string, int> GetWordDictionaryFromXDocument(XDocument xDocument)
+        private TextData GetTextDataFromXDocument(XDocument xDocument)
         {
             var text = xmlService.GetTextFromAllElements(xDocument, "text");
 
-            return textAnalyzer.GetWordFrequenciesFromText(text);
+            return textAnalyzer.GetTextDataFromText(text);
         }
 
         private static void ValidateString(string filepath)

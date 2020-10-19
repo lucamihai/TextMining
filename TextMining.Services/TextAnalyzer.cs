@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TextMining.Entities;
 using TextMining.Services.Interfaces;
 
 namespace TextMining.Services
 {
     public class TextAnalyzer : ITextAnalyzer
     {
-        public Dictionary<string, int> GetWordFrequenciesFromText(string text)
+        public TextData GetTextDataFromText(string text)
         {
             ValidateString(text);
 
-            var wordFrequencies = new Dictionary<string, int>();
-
+            var textData = new TextData
+            {
+                WordDictionary = new Dictionary<string, int>(),
+                AcronymDictionary = new Dictionary<string, int>()
+            };
+            
             // TODO: Consider using StringBuilder
             // TODO: Investigate how words like "don't, won't" will be treated (probably the word will be the string without "n't" at the end)
             var currentWord = string.Empty;
@@ -24,11 +29,11 @@ namespace TextMining.Services
                 }
                 else
                 {
-                    OnWordEnded(ref currentWord, wordFrequencies);
+                    OnWordEnded(ref currentWord, textData);
                 }
             }
 
-            return wordFrequencies;
+            return textData;
         }
 
         private static bool CharacterIsALetter(char character)
@@ -66,36 +71,38 @@ namespace TextMining.Services
             return value.Any(CharacterIsAConnectingCharacter);
         }
 
-        private static void OnWordEnded(ref string word, Dictionary<string, int> wordFrequencies)
+        private static void OnWordEnded(ref string word, TextData textData)
         {
             if (StringHasAtLeastOneConnectingCharacter(word))
             {
                 var words = SplitStringByConnectingCharacters(word);
                 foreach (var wordFromSplit in words)
                 {
-                    AddWordToFrequencyIfValid(wordFromSplit, wordFrequencies);
+                    AddWordIfValid(wordFromSplit, textData);
                 }
             }
             else
             {
-                AddWordToFrequencyIfValid(word, wordFrequencies);
+                AddWordIfValid(word, textData);
             }
 
             word = string.Empty;
         }
 
-        private static void AddWordToFrequencyIfValid(string word, Dictionary<string, int> wordFrequencies)
+        private static void AddWordIfValid(string word, TextData textData)
         {
-            if (IsValidWord(word))
+            if (!IsValidWord(word))
             {
-                if (wordFrequencies.ContainsKey(word))
-                {
-                    wordFrequencies[word]++;
-                }
-                else
-                {
-                    wordFrequencies.Add(word, 1);
-                }
+                return;
+            }
+
+            if (IsAcronym(word))
+            {
+                AddWordToDictionary(word, textData.AcronymDictionary);
+            }
+            else
+            {
+                AddWordToDictionary(word, textData.WordDictionary);
             }
         }
 
@@ -103,6 +110,23 @@ namespace TextMining.Services
         {
             return word.Length != 0
                    && StringHasAtLeastOneLetter(word);
+        }
+
+        private static bool IsAcronym(string word)
+        {
+            return word.All(x => x >= 'A' && x <= 'Z');
+        }
+
+        private static void AddWordToDictionary(string word, Dictionary<string, int> dictionary)
+        {
+            if (dictionary.ContainsKey(word))
+            {
+                dictionary[word]++;
+            }
+            else
+            {
+                dictionary.Add(word, 1);
+            }
         }
 
         private static string[] SplitStringByConnectingCharacters(string value)

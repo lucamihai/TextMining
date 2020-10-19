@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
@@ -60,20 +61,32 @@ namespace TextMining.GUI.UserControls
             try
             {
                 var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(textBoxFilepath.Text);
-                textBoxResult.Text = resultFormatter.GetStringForWordFrequencies(documentData.WordDictionary);
+
+                SetDataGridViewForDictionary(dataGridViewWordDictionary, documentData.TextData.WordDictionary);
+                SetDataGridViewForDictionary(dataGridViewAcronyms, documentData.TextData.AcronymDictionary);
 
                 SetStatusLabel("Done", Color.GreenYellow);
             }
             catch (Exception exception)
             {
                 SetStatusLabel("Error", Color.Red);
-                textBoxResult.Text = exception.ToString();
+                //textBoxResult.Text = exception.ToString();
             }
         }
 
         private void UpdateRunButtonEnabledProperty()
         {
             buttonRun.Enabled = !string.IsNullOrWhiteSpace(textBoxFilepath.Text) && File.Exists(textBoxFilepath.Text);
+        }
+
+        private static void SetDataGridViewForDictionary(DataGridView dataGridView, Dictionary<string, int> wordDictionary)
+        {
+            dataGridView.Rows.Clear();
+
+            foreach (var pair in wordDictionary)
+            {
+                dataGridView.Rows.Add(pair.Key, pair.Value);
+            }
         }
 
         private void SetStatusLabel(string text, Color color)

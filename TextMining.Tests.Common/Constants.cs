@@ -15,6 +15,7 @@ namespace TextMining.Tests.Common
         public static readonly string XmlFileText =
 @"<?xml version=""1.0"" encoding=""iso-8859-1"" ?>
 <newsitem itemid=""2538"" id=""root"" date=""1996-08-20"" xml:lang=""en"">
+<title>Title from XML</title>
 <text>
 text stuff.
 <p>text from paragraph.</p>
@@ -22,6 +23,7 @@ more text stuff.
 some other text stuff.
 composite-word.
 something's.
+ACRONYM.
 </text>
 <copyright>(c) Reuters Limited 1996</copyright>
 <metadata>
@@ -46,6 +48,7 @@ something's.
 </codes>
 </metadata>
 </newsitem>";
+        public const string DocumentTitle = "Title from XML";
 
         public static readonly string TextFromXmlFileFromTextElements = 
 @"
@@ -55,6 +58,7 @@ more text stuff.
 some other text stuff.
 composite-word.
 something's.
+ACRONYM.
 ";
         public static readonly string ExpectedTextFromXmlFileFromParagraphElements = "text from paragraph.";
 
@@ -74,6 +78,11 @@ something's.
             {"word", 1},
             {"something", 1},
             {"s", 1}
+        };
+
+        public static readonly Dictionary<string, int> AcronymFrequenciesFromText = new Dictionary<string, int>
+        {
+            {"ACRONYM", 1}
         };
 
         public static readonly List<string> CodesFromXml = new List<string>
