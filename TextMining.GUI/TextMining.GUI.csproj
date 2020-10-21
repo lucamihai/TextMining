@@ -12,4 +12,10 @@
     <ProjectReference Include="..\TextMining.Services\TextMining.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="UserControls\GlobalDocumentDataBuilderUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

@@ -14,5 +14,20 @@ namespace TextMining.Entities
         {
             return WordDictionary?.Values.Sum() ?? 0;
         }
+
+        public int GetUniqueWordCount()
+        {
+            return WordDictionary?.Select(x => x.Key).Distinct().Count() ?? 0;
+        }
+
+        public int GetTotalAcronymCount()
+        {
+            return AcronymDictionary?.Values.Sum() ?? 0;
+        }
+
+        public int GetUniqueAcronymCount()
+        {
+            return AcronymDictionary?.Select(x => x.Key).Distinct().Count() ?? 0;
+        }
     }
 }

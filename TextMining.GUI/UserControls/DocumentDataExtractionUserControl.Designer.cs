@@ -1,6 +1,6 @@
 ﻿namespace TextMining.GUI.UserControls
 {
-    partial class WordFrequencyUserControl
+    partial class DocumentDataExtractionUserControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -33,18 +33,10 @@
             this.buttonRun = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Word = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WordFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Acronym = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AcronymFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewAcronyms = new System.Windows.Forms.DataGridView();
-            this.dataGridViewWordDictionary = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAcronyms)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWordDictionary)).BeginInit();
+            this.panelDocumentDataDisplayUserControl = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // button1
@@ -94,24 +86,15 @@
             this.labelStatus.TabIndex = 3;
             this.labelStatus.Text = "Status goes here";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(35, 180);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(39, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Result";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Times New Roman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(35, 11);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(141, 23);
+            this.label2.Size = new System.Drawing.Size(233, 23);
             this.label2.TabIndex = 6;
-            this.label2.Text = "Word frequency";
+            this.label2.Text = "Document Data Extraction";
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -128,78 +111,28 @@
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
             this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // Word
+            // panelDocumentDataDisplayUserControl
             // 
-            this.Word.HeaderText = "Word";
-            this.Word.Name = "Word";
-            this.Word.ReadOnly = true;
-            this.Word.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Word.Width = 200;
+            this.panelDocumentDataDisplayUserControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelDocumentDataDisplayUserControl.Location = new System.Drawing.Point(35, 182);
+            this.panelDocumentDataDisplayUserControl.Name = "panelDocumentDataDisplayUserControl";
+            this.panelDocumentDataDisplayUserControl.Size = new System.Drawing.Size(765, 400);
+            this.panelDocumentDataDisplayUserControl.TabIndex = 7;
             // 
-            // WordFrequency
-            // 
-            this.WordFrequency.HeaderText = "Frequency";
-            this.WordFrequency.Name = "WordFrequency";
-            this.WordFrequency.ReadOnly = true;
-            this.WordFrequency.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Acronym
-            // 
-            this.Acronym.HeaderText = "Acronym";
-            this.Acronym.Name = "Acronym";
-            this.Acronym.ReadOnly = true;
-            this.Acronym.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Acronym.Width = 200;
-            // 
-            // AcronymFrequency
-            // 
-            this.AcronymFrequency.HeaderText = "Frequency";
-            this.AcronymFrequency.Name = "AcronymFrequency";
-            this.AcronymFrequency.ReadOnly = true;
-            this.AcronymFrequency.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // WordFrequencyUserControl
+            // DocumentDataExtractionUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDark;
-            // 
-            // dataGridViewAcronyms
-            // 
-            this.dataGridViewAcronyms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewAcronyms.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Acronym,
-            this.AcronymFrequency});
-            this.dataGridViewAcronyms.Location = new System.Drawing.Point(405, 209);
-            this.dataGridViewAcronyms.Name = "dataGridViewAcronyms";
-            this.dataGridViewAcronyms.Size = new System.Drawing.Size(344, 320);
-            this.dataGridViewAcronyms.TabIndex = 7;
-            this.dataGridViewAcronyms.Text = "dataGridView1";
-            // 
-            // dataGridViewWordDictionary
-            // 
-            this.dataGridViewWordDictionary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewWordDictionary.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Word,
-            this.WordFrequency});
-            this.dataGridViewWordDictionary.Location = new System.Drawing.Point(35, 209);
-            this.dataGridViewWordDictionary.Name = "dataGridViewWordDictionary";
-            this.dataGridViewWordDictionary.Size = new System.Drawing.Size(344, 320);
-            this.dataGridViewWordDictionary.TabIndex = 7;
-            this.dataGridViewWordDictionary.Text = "dataGridViewWordDictionary";
-            this.Controls.Add(this.dataGridViewAcronyms);
-            this.Controls.Add(this.dataGridViewWordDictionary);
+            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.Controls.Add(this.panelDocumentDataDisplayUserControl);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonRun);
             this.Controls.Add(this.textBoxFilepath);
             this.Controls.Add(this.button1);
-            this.Name = "WordFrequencyUserControl";
+            this.Name = "DocumentDataExtractionUserControl";
             this.Size = new System.Drawing.Size(816, 600);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewAcronyms)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWordDictionary)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -212,15 +145,9 @@
         private System.Windows.Forms.Button buttonRun;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelStatus;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dataGridViewWordDictionary;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Word;
-        private System.Windows.Forms.DataGridViewTextBoxColumn WordFrequency;
-        private System.Windows.Forms.DataGridView dataGridViewAcronyms;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Acronym;
-        private System.Windows.Forms.DataGridViewTextBoxColumn AcronymFrequency;
+        private System.Windows.Forms.Panel panelDocumentDataDisplayUserControl;
     }
 }

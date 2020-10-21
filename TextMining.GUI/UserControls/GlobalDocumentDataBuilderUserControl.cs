@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic.Interfaces;
@@ -12,12 +13,15 @@ using TextMining.Services.Interfaces;
 namespace TextMining.GUI.UserControls
 {
     [ExcludeFromCodeCoverage]
-    public partial class WordFrequencyUserControl : UserControl
+    public partial class GlobalDocumentDataBuilderUserControl : UserControl
     {
         private readonly ITextMiningBusinessLogic textMiningBusinessLogic;
         private readonly IResultFormatter resultFormatter;
+        private readonly DocumentDataDisplayUserControl documentDataDisplayUserControl;
 
-        public WordFrequencyUserControl()
+        private readonly List<string> filepathsToUseForDocumentData;
+
+        public GlobalDocumentDataBuilderUserControl()
         {
             InitializeComponent();
 
@@ -25,11 +29,16 @@ namespace TextMining.GUI.UserControls
             textMiningBusinessLogic = serviceProvider.GetService<ITextMiningBusinessLogic>();
             resultFormatter = serviceProvider.GetService<IResultFormatter>();
 
+            documentDataDisplayUserControl = new DocumentDataDisplayUserControl();
+            panelDocumentDataDisplayUserControl.Controls.Add(documentDataDisplayUserControl);
+
             UpdateRunButtonEnabledProperty();
             SetStatusLabel("Waiting for input", Color.DodgerBlue);
+
+            filepathsToUseForDocumentData = new List<string>();
         }
 
-        private void buttonLoadFile_Click(object sender, EventArgs e)
+        private void buttonLoadFiles_Click(object sender, EventArgs e)
         {
             using var openFileDialog = new OpenFileDialog
             {
@@ -38,6 +47,7 @@ namespace TextMining.GUI.UserControls
                 CheckFileExists = true,
                 CheckPathExists = true,
 
+                Multiselect = true,
                 DefaultExt = "xml",
                 Filter = "XML files (*.xml)|*.xml",
                 FilterIndex = 2,
@@ -49,8 +59,27 @@ namespace TextMining.GUI.UserControls
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxFilepath.Text = openFileDialog.FileName;
-                SetStatusLabel("File loaded", Color.DodgerBlue);
+                filepathsToUseForDocumentData.Clear();
+                filepathsToUseForDocumentData.AddRange(openFileDialog.FileNames);
+
+                SetStatusLabel("Files loaded", Color.DodgerBlue);
+            }
+
+            UpdateRunButtonEnabledProperty();
+        }
+
+        private void buttonSelectDirectory_Click(object sender, EventArgs e)
+        {
+            using var folderBrowserDialog = new FolderBrowserDialog();
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxSelectedDirectory.Text = folderBrowserDialog.SelectedPath;
+
+                filepathsToUseForDocumentData.Clear();
+                filepathsToUseForDocumentData.AddRange(Directory.GetFiles(folderBrowserDialog.SelectedPath));
+
+                SetStatusLabel("Files from directory loaded", Color.DodgerBlue);
             }
 
             UpdateRunButtonEnabledProperty();
@@ -60,10 +89,9 @@ namespace TextMining.GUI.UserControls
         {
             try
             {
-                var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(textBoxFilepath.Text);
+                var documentData = textMiningBusinessLogic.GetDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
 
-                SetDataGridViewForDictionary(dataGridViewWordDictionary, documentData.TextData.WordDictionary);
-                SetDataGridViewForDictionary(dataGridViewAcronyms, documentData.TextData.AcronymDictionary);
+                documentDataDisplayUserControl.DisplayDocumentData(documentData);
 
                 SetStatusLabel("Done", Color.GreenYellow);
             }
@@ -76,17 +104,7 @@ namespace TextMining.GUI.UserControls
 
         private void UpdateRunButtonEnabledProperty()
         {
-            buttonRun.Enabled = !string.IsNullOrWhiteSpace(textBoxFilepath.Text) && File.Exists(textBoxFilepath.Text);
-        }
-
-        private static void SetDataGridViewForDictionary(DataGridView dataGridView, Dictionary<string, int> wordDictionary)
-        {
-            dataGridView.Rows.Clear();
-
-            foreach (var pair in wordDictionary)
-            {
-                dataGridView.Rows.Add(pair.Key, pair.Value);
-            }
+            buttonRun.Enabled = filepathsToUseForDocumentData != null && filepathsToUseForDocumentData.Count > 0;
         }
 
         private void SetStatusLabel(string text, Color color)

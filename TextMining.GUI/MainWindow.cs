@@ -39,7 +39,12 @@ namespace TextMining.GUI
 
             if (selectedRadioButton == radioButtonUserControlWordFrequency)
             {
-                activeUserControl = new WordFrequencyUserControl();
+                activeUserControl = new DocumentDataExtractionUserControl();
+            }
+
+            if (selectedRadioButton == radioButtonUserControlGlobalDocumentDataBuilder)
+            {
+                activeUserControl = new GlobalDocumentDataBuilderUserControl();
             }
 
             UpdatePanelActiveUserControl();
