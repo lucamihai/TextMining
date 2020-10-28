@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using TextMining.Services.Interfaces;
 
 namespace TextMining.Services
@@ -7,6 +9,20 @@ namespace TextMining.Services
     public class FileService : IFileService
     {
         public string GetAllTextFromFile(string filepath)
+        {
+            ValidateExistingFilepath(filepath);
+
+            return File.ReadAllText(filepath);
+        }
+
+        public List<string> GetAllLinesFromFile(string filepath)
+        {
+            ValidateExistingFilepath(filepath);
+
+            return File.ReadAllLines(filepath).ToList();
+        }
+
+        private void ValidateExistingFilepath(string filepath)
         {
             if (string.IsNullOrWhiteSpace(filepath))
             {
@@ -17,8 +33,6 @@ namespace TextMining.Services
             {
                 throw new FileNotFoundException(filepath);
             }
-
-            return File.ReadAllText(filepath);
         }
     }
 }

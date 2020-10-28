@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TextMining.Providers.Interfaces;
 using TextMining.Services.Interfaces;
 
@@ -19,12 +18,11 @@ namespace TextMining.Providers
         {
             if (stopWords == null)
             {
-                var stopWordsFileText = fileService.GetAllTextFromFile("StopWords.txt");
-                var lines = stopWordsFileText.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+                var stopWordLinesFromFile = fileService.GetAllLinesFromFile("StopWords.txt");
 
                 stopWords = new List<string>();
 
-                foreach (var line in lines)
+                foreach (var line in stopWordLinesFromFile)
                 {
                     if (string.IsNullOrWhiteSpace(line))
                     {
