@@ -9,11 +9,13 @@ namespace TextMining.Providers
 {
     public class DocumentDataProvider : IDocumentDataProvider
     {
+        private readonly IStopWordProvider stopWordProvider;
         private readonly IXmlService xmlService;
         private readonly ITextAnalyzer textAnalyzer;
 
-        public DocumentDataProvider(IXmlService xmlService, ITextAnalyzer textAnalyzer)
+        public DocumentDataProvider(IStopWordProvider stopWordProvider, IXmlService xmlService, ITextAnalyzer textAnalyzer)
         {
+            this.stopWordProvider = stopWordProvider;
             this.xmlService = xmlService;
             this.textAnalyzer = textAnalyzer;
         }
@@ -66,8 +68,9 @@ namespace TextMining.Providers
         private TextData GetTextDataFromXDocument(XDocument xDocument)
         {
             var text = xmlService.GetTextFromAllElements(xDocument, "text");
+            var stopWords = stopWordProvider.GetStopWords();
 
-            return textAnalyzer.GetTextDataFromText(text);
+            return textAnalyzer.GetTextDataFromText(text, stopWords);
         }
 
         private DocumentData JoinDocumentDataList(List<DocumentData> documentDataList)

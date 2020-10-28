@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Porter2StemmerStandard;
 using TextMining.Entities;
 using TextMining.Services.Interfaces;
 
@@ -8,9 +9,20 @@ namespace TextMining.Services
 {
     public class TextAnalyzer : ITextAnalyzer
     {
-        public TextData GetTextDataFromText(string text)
+        private List<string> stopWords;
+        private readonly IStemmer stemmer;
+
+        public TextAnalyzer(IStemmer stemmer)
+        {
+            this.stemmer = stemmer;
+        }
+
+        public TextData GetTextDataFromText(string text, List<string> stopWords)
         {
             ValidateString(text);
+            ValidateList(stopWords);
+
+            this.stopWords = stopWords;
 
             var textData = new TextData
             {
@@ -71,25 +83,28 @@ namespace TextMining.Services
             return value.Any(CharacterIsAConnectingCharacter);
         }
 
-        private static void OnWordEnded(ref string word, TextData textData)
+        private void OnWordEnded(ref string word, TextData textData)
         {
-            if (StringHasAtLeastOneConnectingCharacter(word))
+            if (!stopWords.Contains(word))
             {
-                var words = SplitStringByConnectingCharacters(word);
-                foreach (var wordFromSplit in words)
+                if (StringHasAtLeastOneConnectingCharacter(word))
                 {
-                    AddWordIfValid(wordFromSplit, textData);
+                    var words = SplitStringByConnectingCharacters(word);
+                    foreach (var wordFromSplit in words)
+                    {
+                        AddWordIfValid(wordFromSplit, textData);
+                    }
                 }
-            }
-            else
-            {
-                AddWordIfValid(word, textData);
+                else
+                {
+                    AddWordIfValid(word, textData);
+                }
             }
 
             word = string.Empty;
         }
 
-        private static void AddWordIfValid(string word, TextData textData)
+        private void AddWordIfValid(string word, TextData textData)
         {
             if (!IsValidWord(word))
             {
@@ -102,14 +117,15 @@ namespace TextMining.Services
             }
             else
             {
-                AddWordToDictionary(word, textData.WordDictionary);
+                AddWordToDictionary(stemmer.Stem(word).Value, textData.WordDictionary);
             }
         }
 
-        private static bool IsValidWord(string word)
+        private bool IsValidWord(string word)
         {
             return word.Length != 0
-                   && StringHasAtLeastOneLetter(word);
+                   && StringHasAtLeastOneLetter(word)
+                   && !stopWords.Contains(word);
         }
 
         private static bool IsAcronym(string word)
@@ -135,11 +151,19 @@ namespace TextMining.Services
         }
 
 
-        private void ValidateString(string value)
+        private static void ValidateString(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(value));
+            }
+        }
+
+        private static void ValidateList<T>(List<T> list)
+        {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
             }
         }
     }

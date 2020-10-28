@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using KellermanSoftware.CompareNetObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,13 +35,20 @@ namespace TextMining.Services.UnitTests
         [ExpectedException(typeof(ArgumentException))]
         public void TestThatWhenTextIsNotValidGetWordFrequenciesFromTextThrowsArgumentException(string filepath)
         {
-            textAnalyzer.GetTextDataFromText(filepath);
+            textAnalyzer.GetTextDataFromText(filepath, new List<string>());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestThatWhenStopWordsIsNullGetWordFrequenciesFromTextThrowsArgumentNullException()
+        {
+            textAnalyzer.GetTextDataFromText(Constants.TestFileName, null);
         }
 
         [TestMethod]
         public void TestThatGetWordFrequenciesFromTextReturnsExpectedTextData()
         {
-            var textData = textAnalyzer.GetTextDataFromText(Constants.TextFromXmlFileFromTextElements);
+            var textData = textAnalyzer.GetTextDataFromText(Constants.TextFromXmlFileFromTextElements, Constants.StopWords);
 
             Assert.IsTrue(compareLogic.Compare(Constants.WordFrequenciesFromText, textData.WordDictionary).AreEqual);
             Assert.IsTrue(compareLogic.Compare(Constants.AcronymFrequenciesFromText, textData.AcronymDictionary).AreEqual);

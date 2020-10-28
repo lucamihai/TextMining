@@ -24,6 +24,7 @@ some other text stuff.
 composite-word.
 something's.
 ACRONYM.
+stop words stop-words.
 </text>
 <copyright>(c) Reuters Limited 1996</copyright>
 <metadata>
@@ -50,6 +51,10 @@ ACRONYM.
 </newsitem>";
         public const string DocumentTitle = "Title from XML";
 
+        public static readonly List<string> StopWords = new List<string>
+        {
+            "stop", "words"
+        };
         public static readonly string TextFromXmlFileFromTextElements = 
 @"
 text stuff.
@@ -59,6 +64,7 @@ some other text stuff.
 composite-word.
 something's.
 ACRONYM.
+stop words stop-words.
 ";
         public static readonly string ExpectedTextFromXmlFileFromParagraphElements = "text from paragraph.";
 

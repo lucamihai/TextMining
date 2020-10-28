@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,6 +7,12 @@
   <ItemGroup>
     <ProjectReference Include="..\TextMining.Entities\TextMining.Entities.csproj" />
     <ProjectReference Include="..\TextMining.Services\TextMining.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="StopWords.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

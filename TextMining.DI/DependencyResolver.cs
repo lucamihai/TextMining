@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
+using Porter2StemmerStandard;
 using TextMining.BusinessLogic;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.Providers;
@@ -18,8 +19,10 @@ namespace TextMining.DI
 
             services.AddScoped<ITextMiningBusinessLogic, TextMiningBusinessLogic>();
 
+            services.AddScoped<IStopWordProvider, EnglishStopWordsProvider>();
             services.AddScoped<IDocumentDataProvider, DocumentDataProvider>();
 
+            services.AddScoped<IStemmer, EnglishPorter2Stemmer>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IResultFormatter, ResultFormatter>();
             services.AddScoped<ITextAnalyzer, TextAnalyzer>();
