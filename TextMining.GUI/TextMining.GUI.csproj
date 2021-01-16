@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TextMining.BusinessLogic\TextMining.BusinessLogic.csproj" />
+    <ProjectReference Include="..\TextMining.DiscoveryLogic\TextMining.DiscoveryLogic.csproj" />
     <ProjectReference Include="..\TextMining.DI\TextMining.DI.csproj" />
+    <ProjectReference Include="..\TextMining.FeatureSelectionLogic\TextMining.FeatureSelectionLogic.csproj" />
   </ItemGroup>
 
   <ItemGroup>

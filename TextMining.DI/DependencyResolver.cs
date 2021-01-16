@@ -2,10 +2,14 @@
 using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic;
 using TextMining.BusinessLogic.Interfaces;
+using TextMining.DiscoveryLogic;
+using TextMining.DiscoveryLogic.Interfaces;
 using TextMining.DocumentDataLogic;
 using TextMining.DocumentDataLogic.Interfaces;
 using TextMining.DocumentDataLogic.Interfaces.Services;
 using TextMining.DocumentDataLogic.Services;
+using TextMining.FeatureSelectionLogic;
+using TextMining.FeatureSelectionLogic.Interfaces;
 using TextMining.Helpers;
 using TextMining.Helpers.Interfaces;
 
@@ -22,6 +26,9 @@ namespace TextMining.DI
 
             services.AddScoped<IStopWordProvider, EnglishStopWordsProvider>();
             services.AddScoped<IDocumentDataProvider, DocumentDataProvider>();
+
+            services.AddScoped<IFeatureSelector, FeatureSelector>();
+            services.AddScoped<ITopicPredictor, TopicPredictor>();
 
             services.AddScoped<IStemmingService, StemmingService>();
             services.AddScoped<IFileService, FileService>();

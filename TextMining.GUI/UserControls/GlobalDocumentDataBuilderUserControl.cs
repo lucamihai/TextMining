@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.DI;
-using TextMining.Helpers.Interfaces;
+using TextMining.DiscoveryLogic.Interfaces;
+using TextMining.FeatureSelectionLogic.Interfaces;
+using TextMining.Helpers.Extensions;
 
 namespace TextMining.GUI.UserControls
 {
@@ -16,7 +17,8 @@ namespace TextMining.GUI.UserControls
     public partial class GlobalDocumentDataBuilderUserControl : UserControl
     {
         private readonly IDocumentDataBusinessLogic documentDataBusinessLogic;
-        private readonly IResultFormatter resultFormatter;
+        private readonly IFeatureSelector featureSelector;
+        private readonly ITopicPredictor topicPredictor;
         private readonly DocumentDataDisplayUserControl documentDataDisplayUserControl;
 
         private readonly List<string> filepathsToUseForDocumentData;
@@ -27,7 +29,8 @@ namespace TextMining.GUI.UserControls
 
             var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
             documentDataBusinessLogic = serviceProvider.GetService<IDocumentDataBusinessLogic>();
-            resultFormatter = serviceProvider.GetService<IResultFormatter>();
+            featureSelector = serviceProvider.GetService<IFeatureSelector>();
+            topicPredictor = serviceProvider.GetService<ITopicPredictor>();
 
             documentDataDisplayUserControl = new DocumentDataDisplayUserControl();
             panelDocumentDataDisplayUserControl.Controls.Add(documentDataDisplayUserControl);
@@ -89,9 +92,11 @@ namespace TextMining.GUI.UserControls
         {
             try
             {
-                //var documentData = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
-                //var global = documentDataBusinessLogic.GetGlobalDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
-                //var max = global.Frequencies.Cast<int>().Max();
+                var documentDataList = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
+                var datasetRepresentation = documentDataList.ToDatasetRepresentation();
+                var features = featureSelector.GetMostImportantWords(datasetRepresentation);
+                datasetRepresentation = datasetRepresentation.ReconstructByKeepingOnlyTheseWords(features);
+                topicPredictor.Train(datasetRepresentation);
 
                 //documentDataDisplayUserControl.DisplayDocumentData(documentData);
                 SetStatusLabel("Done", Color.GreenYellow);
