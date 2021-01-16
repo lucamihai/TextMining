@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Accord.MachineLearning;
 using TextMining.Helpers.Interfaces;
 
 namespace TextMining.Helpers
@@ -11,9 +10,6 @@ namespace TextMining.Helpers
         public string GetAllTextFromFile(string filepath)
         {
             ArgumentValidator.ValidateExistingFilepath(filepath);
-
-            var cv = new KNearestNeighbors<string>();
-
 
             return File.ReadAllText(filepath);
         }

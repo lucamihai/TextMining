@@ -90,8 +90,8 @@ namespace TextMining.GUI.UserControls
             try
             {
                 //var documentData = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
-                var global = documentDataBusinessLogic.GetGlobalDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
-                var max = global.Frequencies.Cast<int>().Max();
+                //var global = documentDataBusinessLogic.GetGlobalDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
+                //var max = global.Frequencies.Cast<int>().Max();
 
                 //documentDataDisplayUserControl.DisplayDocumentData(documentData);
                 SetStatusLabel("Done", Color.GreenYellow);
