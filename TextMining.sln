@@ -29,6 +29,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Helpers", "TextM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.DocumentDataLogic", "TextMining.DocumentDataLogic\TextMining.DocumentDataLogic.csproj", "{7AD43292-3020-425D-876C-F0BA634B7435}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.FeatureSelectionLogic", "TextMining.FeatureSelectionLogic\TextMining.FeatureSelectionLogic.csproj", "{59FED205-F3A0-4A88-B7F4-19637FC041C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.DiscoveryLogic", "TextMining.DiscoveryLogic\TextMining.DiscoveryLogic.csproj", "{9E35D409-3215-407B-8ED2-007F1DEF355A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +87,14 @@ Global
 		{7AD43292-3020-425D-876C-F0BA634B7435}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AD43292-3020-425D-876C-F0BA634B7435}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AD43292-3020-425D-876C-F0BA634B7435}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59FED205-F3A0-4A88-B7F4-19637FC041C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59FED205-F3A0-4A88-B7F4-19637FC041C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59FED205-F3A0-4A88-B7F4-19637FC041C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59FED205-F3A0-4A88-B7F4-19637FC041C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E35D409-3215-407B-8ED2-007F1DEF355A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E35D409-3215-407B-8ED2-007F1DEF355A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E35D409-3215-407B-8ED2-007F1DEF355A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E35D409-3215-407B-8ED2-007F1DEF355A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

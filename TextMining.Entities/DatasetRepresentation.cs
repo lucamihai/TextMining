@@ -6,8 +6,8 @@ namespace TextMining.Entities
     [ExcludeFromCodeCoverage]
     public class DatasetRepresentation
     {
-        public List<string> Attributes { get; set; }
-        public List<string> Topics { get; set; }
-        public List<string> DataEntries { get; set; }
+        public List<string> Words { get; set; }
+        public int[,] Frequencies { get; set; }
+        public List<List<string>> Topics { get; set; }
     }
 }

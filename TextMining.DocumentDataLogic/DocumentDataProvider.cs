@@ -35,13 +35,13 @@ namespace TextMining.DocumentDataLogic
             };
         }
 
-        public DocumentData GetDocumentDataForMultipleXmlFiles(List<string> filepaths)
+        public List<DocumentData> GetDocumentDataForMultipleXmlFiles(List<string> filePaths)
         {
-            ArgumentValidator.ValidateNotEmptyList(filepaths);
+            ArgumentValidator.ValidateNotEmptyList(filePaths);
 
             var documentDataList = new List<DocumentData>();
 
-            foreach (var filepath in filepaths)
+            foreach (var filepath in filePaths)
             {
                 try
                 {
@@ -54,7 +54,7 @@ namespace TextMining.DocumentDataLogic
                 }
             }
 
-            return JoinDocumentDataList(documentDataList);
+            return documentDataList;
         }
 
         private string GetTitleFromXDocument(XDocument xDocument)

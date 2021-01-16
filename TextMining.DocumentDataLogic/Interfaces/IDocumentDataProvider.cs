@@ -6,6 +6,6 @@ namespace TextMining.DocumentDataLogic.Interfaces
     public interface IDocumentDataProvider
     {
         DocumentData GetDocumentDataFromXmlFile(string filepath);
-        DocumentData GetDocumentDataForMultipleXmlFiles(List<string> filepaths);
+        List<DocumentData> GetDocumentDataForMultipleXmlFiles(List<string> filePaths);
     }
 }

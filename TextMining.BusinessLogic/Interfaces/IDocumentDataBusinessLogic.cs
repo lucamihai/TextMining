@@ -6,7 +6,6 @@ namespace TextMining.BusinessLogic.Interfaces
     public interface IDocumentDataBusinessLogic
     {
         DocumentData GetDocumentDataFromXmlFile(string filepath);
-        DocumentData GetDocumentDataForMultipleXmlFiles(List<string> filepaths);
-        GlobalDocumentData GetGlobalDocumentDataForMultipleXmlFiles(List<string> filepaths);
+        List<DocumentData> GetDocumentDataForMultipleXmlFiles(List<string> filePaths);
     }
 }
