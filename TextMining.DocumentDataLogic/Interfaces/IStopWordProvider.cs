@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TextMining.Providers.Interfaces
+namespace TextMining.DocumentDataLogic.Interfaces
 {
     public interface IStopWordProvider
     {

@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining", "TextMining\TextMining.csproj", "{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Services", "TextMining.Services\TextMining.Services.csproj", "{6579CE3D-9560-4938-8036-3AA16BBEFAED}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{96F69F57-C56F-4473-9B7C-6A6CD297C7E3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Tests.Common", "TextMining.Tests.Common\TextMining.Tests.Common.csproj", "{39A86C79-0FCA-477D-B221-DBE9950B614D}"
@@ -25,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.GUI", "TextMinin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Entities", "TextMining.Entities\TextMining.Entities.csproj", "{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Providers", "TextMining.Providers\TextMining.Providers.csproj", "{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Providers.UnitTests", "TextMining.Providers.UnitTests\TextMining.Providers.UnitTests.csproj", "{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.Providers.UnitTests", "TextMining.Providers.UnitTests\TextMining.Providers.UnitTests.csproj", "{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextMining.Helpers", "TextMining.Helpers\TextMining.Helpers.csproj", "{16227F2F-87EB-4A3D-9423-13FCFE12B7B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextMining.DocumentDataLogic", "TextMining.DocumentDataLogic\TextMining.DocumentDataLogic.csproj", "{7AD43292-3020-425D-876C-F0BA634B7435}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,6 @@ Global
 		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1581CB8-60FB-4AE1-96F5-E1EC6CB53330}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6579CE3D-9560-4938-8036-3AA16BBEFAED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39A86C79-0FCA-477D-B221-DBE9950B614D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,14 +71,18 @@ Global
 		{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCD26389-1C4C-4CCA-9A4F-5DB784A16971}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FC5984B-7CAC-4EF6-9D1C-682AB4C69725}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3D1AC06-5F65-401A-AB07-035AB3DAEBD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16227F2F-87EB-4A3D-9423-13FCFE12B7B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16227F2F-87EB-4A3D-9423-13FCFE12B7B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16227F2F-87EB-4A3D-9423-13FCFE12B7B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16227F2F-87EB-4A3D-9423-13FCFE12B7B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AD43292-3020-425D-876C-F0BA634B7435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AD43292-3020-425D-876C-F0BA634B7435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AD43292-3020-425D-876C-F0BA634B7435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AD43292-3020-425D-876C-F0BA634B7435}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

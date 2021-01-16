@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using TextMining.Providers.Interfaces;
-using TextMining.Services.Interfaces;
+using TextMining.DocumentDataLogic.Interfaces;
+using TextMining.Helpers.Interfaces;
 
-namespace TextMining.Providers
+namespace TextMining.DocumentDataLogic
 {
     public class EnglishStopWordsProvider : IStopWordProvider
     {

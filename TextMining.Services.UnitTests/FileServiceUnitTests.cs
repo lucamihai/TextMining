@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TextMining.Helpers;
 using TextMining.Tests.Common;
 
 namespace TextMining.Services.UnitTests

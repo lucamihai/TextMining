@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TextMining.Providers\TextMining.Providers.csproj" />
     <ProjectReference Include="..\TextMining.Tests.Common\TextMining.Tests.Common.csproj" />
   </ItemGroup>
 

@@ -33,7 +33,7 @@ stop words stop-words.
     <editdetail attribution=""Reuters BIP Coding Group"" action=""confirmed"" date=""1996-08-20""/>
   </code>
 </codes>
-<codes class=""bip:industries:1.0"">
+<codes class=""bip:topics:1.0"">
   <code code=""Code2"">
     <editdetail attribution=""Reuters BIP Coding Group"" action=""confirmed"" date=""1996-08-20""/>
   </code>
@@ -93,7 +93,7 @@ stop words stop-words.
 
         public static readonly List<string> CodesFromXml = new List<string>
         {
-            "Code1", "Code2", "Code3", "Code4",
+            "Code2", "Code3", "Code4",
         };
     }
 }

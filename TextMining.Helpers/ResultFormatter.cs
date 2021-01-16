@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using TextMining.Services.Interfaces;
+using TextMining.Helpers.Interfaces;
 
-namespace TextMining.Services
+namespace TextMining.Helpers
 {
     public class ResultFormatter : IResultFormatter
     {
-        public string GetStringForWordFrequencies(Dictionary<string, int> wordFrequencies)
+        public string GetStringRepresentationForWordFrequencies(Dictionary<string, int> wordFrequencies)
         {
-            if (wordFrequencies == null)
-            {
-                throw new ArgumentNullException(nameof(wordFrequencies));
-            }
+            ArgumentValidator.ValidateObject(wordFrequencies);
 
             var stringBuilder = new StringBuilder();
 

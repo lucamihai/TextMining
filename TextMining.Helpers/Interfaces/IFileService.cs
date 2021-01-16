@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TextMining.Services.Interfaces
+namespace TextMining.Helpers.Interfaces
 {
     public interface IFileService
     {

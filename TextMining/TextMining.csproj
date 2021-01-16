@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TextMining.DI\TextMining.DI.csproj" />
-    <ProjectReference Include="..\TextMining.Services\TextMining.Services.csproj" />
+    <ProjectReference Include="..\TextMining.Helpers\TextMining.Helpers.csproj" />
   </ItemGroup>
 
 </Project>

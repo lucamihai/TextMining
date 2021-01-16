@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using TextMining.Providers.Interfaces;
 using TextMining.Tests.Common;
 
 namespace TextMining.BusinessLogic.UnitTests
@@ -11,7 +10,7 @@ namespace TextMining.BusinessLogic.UnitTests
     [ExcludeFromCodeCoverage]
     public class TextMiningBusinessLogicUnitTests
     {
-        private TextMiningBusinessLogic textMiningBusinessLogic;
+        private DocumentDataBusinessLogic documentDataBusinessLogic;
         private Mock<IDocumentDataProvider> documentDataProviderMock;
 
         [TestInitialize]
@@ -19,7 +18,7 @@ namespace TextMining.BusinessLogic.UnitTests
         {
             documentDataProviderMock = new Mock<IDocumentDataProvider>();
 
-            textMiningBusinessLogic = new TextMiningBusinessLogic(documentDataProviderMock.Object);
+            documentDataBusinessLogic = new DocumentDataBusinessLogic(documentDataProviderMock.Object);
         }
 
         [TestMethod]
@@ -29,7 +28,7 @@ namespace TextMining.BusinessLogic.UnitTests
         [ExpectedException(typeof(ArgumentException))]
         public void TestThatWhenFilepathIsNotValidGetDocumentDataFromXmlFileThrowsArgumentException(string filepath)
         {
-            textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
+            documentDataBusinessLogic.GetDocumentDataFromXmlFile(filepath);
         }
 
         [TestMethod]
@@ -37,7 +36,7 @@ namespace TextMining.BusinessLogic.UnitTests
         {
             const string filepath = "abc.txt";
 
-            textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
+            documentDataBusinessLogic.GetDocumentDataFromXmlFile(filepath);
 
             documentDataProviderMock.Verify(x => x.GetDocumentDataFromXmlFile(filepath), Times.Once);
         }

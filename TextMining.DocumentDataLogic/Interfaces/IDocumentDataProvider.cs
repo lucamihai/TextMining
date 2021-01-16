@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TextMining.Entities;
 
-namespace TextMining.Providers.Interfaces
+namespace TextMining.DocumentDataLogic.Interfaces
 {
     public interface IDocumentDataProvider
     {

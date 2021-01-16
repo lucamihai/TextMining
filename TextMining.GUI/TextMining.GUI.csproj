@@ -9,13 +9,10 @@
   <ItemGroup>
     <ProjectReference Include="..\TextMining.BusinessLogic\TextMining.BusinessLogic.csproj" />
     <ProjectReference Include="..\TextMining.DI\TextMining.DI.csproj" />
-    <ProjectReference Include="..\TextMining.Services\TextMining.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="UserControls\GlobalDocumentDataBuilderUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="UserControls\GlobalDocumentDataBuilderUserControl.cs" />
   </ItemGroup>
 
 </Project>

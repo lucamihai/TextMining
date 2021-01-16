@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using TextMining.Services.Interfaces;
 using TextMining.Tests.Common;
 
 namespace TextMining.Providers.UnitTests
@@ -13,20 +13,24 @@ namespace TextMining.Providers.UnitTests
     public class DocumentDataProviderUnitTests
     {
         private DocumentDataProvider documentDataProvider;
+        private Mock<IStopWordProvider> stopWordsProviderMock;
         private Mock<IXmlService> xmlServiceMock;
         private Mock<ITextAnalyzer> textAnalyzerMock;
 
+        private List<string> stopWordsReturnedByStopWordsProvider;
         private XDocument xDocumentReturnedByXmlService;
         private string textReturnedByXmlService;
 
         [TestInitialize]
         public void Setup()
         {
+            stopWordsProviderMock = new Mock<IStopWordProvider>();
             xmlServiceMock = new Mock<IXmlService>();
             textAnalyzerMock = new Mock<ITextAnalyzer>();
 
-            documentDataProvider = new DocumentDataProvider(xmlServiceMock.Object, textAnalyzerMock.Object);
+            documentDataProvider = new DocumentDataProvider(stopWordsProviderMock.Object, xmlServiceMock.Object, textAnalyzerMock.Object);
 
+            SetupStopWordsProviderMock();
             SetupXmlServiceMock();
         }
 
@@ -68,7 +72,15 @@ namespace TextMining.Providers.UnitTests
 
             documentDataProvider.GetDocumentDataFromXmlFile(filepath);
 
-            textAnalyzerMock.Verify(x => x.GetTextDataFromText(textReturnedByXmlService), Times.Once);
+            textAnalyzerMock.Verify(x => x.GetTextDataFromText(textReturnedByXmlService, stopWordsReturnedByStopWordsProvider), Times.Once);
+        }
+
+        private void SetupStopWordsProviderMock()
+        {
+            stopWordsReturnedByStopWordsProvider = new List<string>();
+            stopWordsProviderMock
+                .Setup(x => x.GetStopWords())
+                .Returns(stopWordsReturnedByStopWordsProvider);
         }
 
         private void SetupXmlServiceMock()

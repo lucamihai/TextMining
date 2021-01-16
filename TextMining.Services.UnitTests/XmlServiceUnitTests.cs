@@ -111,17 +111,17 @@ namespace TextMining.Services.UnitTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void TestThatWhenXDocumentIsNullGetCodesFromXDocumentThrowsArgumentNullException()
+        public void TestThatWhenXDocumentIsNullGetTopicsFromXDocumentThrowsArgumentNullException()
         {
-            xmlService.GetCodesFromXDocument(null);
+            xmlService.GetTopicsFromXDocument(null);
         }
 
         [TestMethod]
-        public void TestThatGetCodesFromXDocumentReturnsExpectedValue()
+        public void TestThatGetTopicsFromXDocumentReturnsExpectedValue()
         {
             var xDocument = XDocument.Parse(Constants.XmlFileText);
 
-            var returnedValue = xmlService.GetCodesFromXDocument(xDocument);
+            var returnedValue = xmlService.GetTopicsFromXDocument(xDocument);
 
             Assert.IsTrue(comparer.Compare(Constants.CodesFromXml, returnedValue).AreEqual);
         }

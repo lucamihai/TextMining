@@ -6,14 +6,14 @@ using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.DI;
-using TextMining.Services.Interfaces;
+using TextMining.Helpers.Interfaces;
 
 namespace TextMining.GUI.UserControls
 {
     [ExcludeFromCodeCoverage]
     public partial class DocumentDataExtractionUserControl : UserControl
     {
-        private readonly ITextMiningBusinessLogic textMiningBusinessLogic;
+        private readonly IDocumentDataBusinessLogic documentDataBusinessLogic;
         private readonly IResultFormatter resultFormatter;
         private readonly DocumentDataDisplayUserControl documentDataDisplayUserControl;
 
@@ -22,7 +22,7 @@ namespace TextMining.GUI.UserControls
             InitializeComponent();
 
             var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
-            textMiningBusinessLogic = serviceProvider.GetService<ITextMiningBusinessLogic>();
+            documentDataBusinessLogic = serviceProvider.GetService<IDocumentDataBusinessLogic>();
             resultFormatter = serviceProvider.GetService<IResultFormatter>();
 
             documentDataDisplayUserControl = new DocumentDataDisplayUserControl();
@@ -63,7 +63,7 @@ namespace TextMining.GUI.UserControls
         {
             try
             {
-                var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(textBoxFilepath.Text);
+                var documentData = documentDataBusinessLogic.GetDocumentDataFromXmlFile(textBoxFilepath.Text);
 
                 documentDataDisplayUserControl.DisplayDocumentData(documentData);
 

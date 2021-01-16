@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TextMining.BusinessLogic\TextMining.BusinessLogic.csproj" />
-    <ProjectReference Include="..\TextMining.Providers\TextMining.Providers.csproj" />
-    <ProjectReference Include="..\TextMining.Services\TextMining.Services.csproj" />
   </ItemGroup>
 
 </Project>

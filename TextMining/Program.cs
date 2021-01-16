@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.DI;
-using TextMining.Services.Interfaces;
+using TextMining.Helpers.Interfaces;
 
 namespace TextMining
 {
@@ -13,7 +13,7 @@ namespace TextMining
         private static void Main(string[] args)
         {
             var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
-            var textMiningBusinessLogic = serviceProvider.GetService<ITextMiningBusinessLogic>();
+            var textMiningBusinessLogic = serviceProvider.GetService<IDocumentDataBusinessLogic>();
             var formatter = serviceProvider.GetService<IResultFormatter>();
 
             // TODO: Get filepath from command line OR make filepath relative
@@ -21,7 +21,7 @@ namespace TextMining
 
             var documentData = textMiningBusinessLogic.GetDocumentDataFromXmlFile(filepath);
             var wordFrequencies = documentData.TextData.WordDictionary;
-            var resultAsString = formatter.GetStringForWordFrequencies(wordFrequencies);
+            var resultAsString = formatter.GetStringRepresentationForWordFrequencies(wordFrequencies);
 
             Console.WriteLine(resultAsString);
             Console.Read();

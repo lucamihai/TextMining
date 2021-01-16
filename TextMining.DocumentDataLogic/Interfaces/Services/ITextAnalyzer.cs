@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TextMining.Entities;
 
-namespace TextMining.Services.Interfaces
+namespace TextMining.DocumentDataLogic.Interfaces.Services
 {
     public interface ITextAnalyzer
     {

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using TextMining.DocumentDataLogic.Interfaces;
+using TextMining.DocumentDataLogic.Interfaces.Services;
 using TextMining.Entities;
-using TextMining.Providers.Interfaces;
-using TextMining.Services.Interfaces;
+using TextMining.Helpers;
 
-namespace TextMining.Providers
+namespace TextMining.DocumentDataLogic
 {
     public class DocumentDataProvider : IDocumentDataProvider
     {
@@ -22,7 +23,7 @@ namespace TextMining.Providers
 
         public DocumentData GetDocumentDataFromXmlFile(string filepath)
         {
-            ValidateString(filepath);
+            ArgumentValidator.ValidateString(filepath);
 
             var xDocument = xmlService.GetXDocumentFromFile(filepath);
 
@@ -30,13 +31,13 @@ namespace TextMining.Providers
             {
                 Title = GetTitleFromXDocument(xDocument),
                 TextData = GetTextDataFromXDocument(xDocument),
-                Topics = xmlService.GetCodesFromXDocument(xDocument)
+                Topics = xmlService.GetTopicsFromXDocument(xDocument)
             };
         }
 
         public DocumentData GetDocumentDataForMultipleXmlFiles(List<string> filepaths)
         {
-            ValidateList(filepaths);
+            ArgumentValidator.ValidateNotEmptyList(filepaths);
 
             var documentDataList = new List<DocumentData>();
 
@@ -119,27 +120,6 @@ namespace TextMining.Providers
                 {
                     destination.Add(sourceValue);
                 }
-            }
-        }
-
-        private static void ValidateString(string filepath)
-        {
-            if (string.IsNullOrWhiteSpace(filepath))
-            {
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(filepath));
-            }
-        }
-
-        private void ValidateList<T>(List<T> list)
-        {
-            if (list == null)
-            {
-                throw new ArgumentNullException(nameof(list));
-            }
-
-            if (list.Count == 0)
-            {
-                throw new ArgumentException(nameof(list));
             }
         }
     }
