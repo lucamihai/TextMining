@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.DI;
 using TextMining.DiscoveryLogic.Interfaces;
@@ -94,8 +96,16 @@ namespace TextMining.GUI.UserControls
             {
                 var documentDataList = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
                 var datasetRepresentation = documentDataList.ToDatasetRepresentation();
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
                 var features = featureSelector.GetMostImportantWords(datasetRepresentation);
+                stopwatch.Stop();
+                var featuresJson = JsonConvert.SerializeObject(features);
+                File.WriteAllText("features.json", featuresJson);
+                
                 datasetRepresentation = datasetRepresentation.ReconstructByKeepingOnlyTheseWords(features);
+                var datasetJson = JsonConvert.SerializeObject(datasetRepresentation);
+                File.WriteAllText("dataset.json", datasetJson);
                 topicPredictor.Train(datasetRepresentation);
 
                 //documentDataDisplayUserControl.DisplayDocumentData(documentData);

@@ -27,7 +27,8 @@ namespace TextMining.DI
             services.AddScoped<IStopWordProvider, EnglishStopWordsProvider>();
             services.AddScoped<IDocumentDataProvider, DocumentDataProvider>();
 
-            services.AddScoped<IFeatureSelector, FeatureSelector>();
+            //services.AddScoped<IFeatureSelector, GiniIndexFeatureSelector>();
+            services.AddScoped<IFeatureSelector, InformationGainFeatureSelector>();
             services.AddScoped<ITopicPredictor, TopicPredictor>();
 
             services.AddScoped<IStemmingService, StemmingService>();
