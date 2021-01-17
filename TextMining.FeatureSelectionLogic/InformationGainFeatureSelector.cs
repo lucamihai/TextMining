@@ -17,7 +17,7 @@ namespace TextMining.FeatureSelectionLogic
 
             var datasetEntropy = GetDatasetEntropy(datasetRepresentation);
             var attributeAndInformationGainPairs = new Dictionary<string, double>();
-            double datasetDocumentCount = datasetRepresentation.Topics.Count;
+            double datasetDocumentCount = datasetRepresentation.DocumentTopics.Count;
 
             for (var attributeIndex = 0; attributeIndex < datasetRepresentation.Words.Count; attributeIndex++)
             {
@@ -26,8 +26,8 @@ namespace TextMining.FeatureSelectionLogic
 
                 foreach (var possibleValue in possibleValues)
                 {
-                    var subset = datasetRepresentation.ReconstructByKeepingOnlyTheseFrequencies(new List<int> {possibleValue});
-                    sum += (subset.Topics.Count / datasetDocumentCount) * GetDatasetEntropy(subset);
+                    var subset = datasetRepresentation.ReconstructByKeepingOnlyTheseFrequencies(new List<int> {possibleValue}, attributeIndex);
+                    sum += (subset.DocumentTopics.Count / datasetDocumentCount) * GetDatasetEntropy(subset);
                 }
 
                 var attribute = datasetRepresentation.Words[attributeIndex];
@@ -42,11 +42,11 @@ namespace TextMining.FeatureSelectionLogic
         {
             var possibleTopics = datasetRepresentation.GetAllDistinctTopics();
             var sum = 0d;
-            double documentCount = datasetRepresentation.Topics.Count;
+            double documentCount = datasetRepresentation.DocumentTopics.Count;
 
             foreach (var topic in possibleTopics)
             {
-                var documentsWithGivenTopic = datasetRepresentation.Topics.Count(x => x.Contains(topic));
+                var documentsWithGivenTopic = datasetRepresentation.DocumentTopics.Count(x => x.Contains(topic));
                 var probability = documentsWithGivenTopic / documentCount;
                 sum += probability * Math.Log2(probability);
             }
@@ -58,11 +58,9 @@ namespace TextMining.FeatureSelectionLogic
         {
             var possibleValues = new List<int>();
 
-            for (int documentIndex = 0;
-                documentIndex < datasetRepresentation.Frequencies.GetLength(0);
-                documentIndex++)
+            for (int documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
             {
-                var value = datasetRepresentation.Frequencies[documentIndex, attributeIndex];
+                var value = datasetRepresentation.GetDocumentWordFrequency(documentIndex, attributeIndex);
                 if (!possibleValues.Contains(value))
                 {
                     possibleValues.Add(value);

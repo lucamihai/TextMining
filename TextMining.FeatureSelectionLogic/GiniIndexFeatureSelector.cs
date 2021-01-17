@@ -33,14 +33,14 @@ namespace TextMining.FeatureSelectionLogic
 
         private double GetDatasetImpurity(DatasetRepresentation datasetRepresentation)
         {
-            var documentCount = datasetRepresentation.Frequencies.GetLength(0);
+            var documentCount = datasetRepresentation.DocumentWordFrequencies.Count;
             var allTopics = datasetRepresentation.GetAllDistinctTopics();
             var sum = 0d;
 
             foreach (var topic in allTopics)
             {
                 var documentsWithTopic = 0d;
-                foreach (var datasetRepresentationTopic in datasetRepresentation.Topics)
+                foreach (var datasetRepresentationTopic in datasetRepresentation.DocumentTopics)
                 {
                     if (datasetRepresentationTopic.Contains(topic))
                     {
@@ -68,9 +68,9 @@ namespace TextMining.FeatureSelectionLogic
             //var data = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22};
             var possibleValues = new List<int>();
 
-            for (int documentIndex = 0; documentIndex < datasetRepresentation.Frequencies.GetLength(0); documentIndex++)
+            for (int documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
             {
-                var value = datasetRepresentation.Frequencies[documentIndex, attributeIndex];
+                var value = datasetRepresentation.DocumentWordFrequencies[documentIndex][attributeIndex];
                 if (!possibleValues.Contains(value))
                 {
                     possibleValues.Add(value);

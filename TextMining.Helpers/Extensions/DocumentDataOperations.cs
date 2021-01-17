@@ -16,21 +16,24 @@ namespace TextMining.Helpers.Extensions
                 .Distinct()
                 .ToList();
 
-            var frequencies = new int[documentDataList.Count, uniqueWords.Count];
+            var frequencies = new List<Dictionary<int, int>>();
             var topics = new List<List<string>>();
             for (var documentIndex = 0; documentIndex < documentDataList.Count; documentIndex++)
             {
                 var documentData = documentDataList[documentIndex];
+                var currentFrequencies = new Dictionary<int, int>();
 
                 for (var wordIndex = 0; wordIndex < uniqueWords.Count; wordIndex++)
                 {
                     var word = uniqueWords[wordIndex];
 
-                    if (documentData.TextData.WordDictionary.TryGetValue(word, out var frequency))
+                    if (documentData.TextData.WordDictionary.TryGetValue(word, out var frequency) && frequency > 0)
                     {
-                        frequencies[documentIndex, wordIndex] = frequency;
+                        currentFrequencies.Add(wordIndex, frequency);
                     }
                 }
+
+                frequencies.Add(currentFrequencies);
 
                 var uniqueTopics = documentData
                     .Topics
@@ -42,8 +45,8 @@ namespace TextMining.Helpers.Extensions
             return new DatasetRepresentation
             {
                 Words = uniqueWords,
-                Frequencies = frequencies,
-                Topics = topics
+                DocumentWordFrequencies = frequencies,
+                DocumentTopics = topics
             };
         }
     }

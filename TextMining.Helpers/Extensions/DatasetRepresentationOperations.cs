@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Tasks;
 using TextMining.Entities;
 
 namespace TextMining.Helpers.Extensions
@@ -8,71 +10,71 @@ namespace TextMining.Helpers.Extensions
     [ExcludeFromCodeCoverage]
     public static class DatasetRepresentationOperations
     {
-        public static DatasetRepresentation ReconstructByKeepingOnlyTheseWords(this DatasetRepresentation datasetRepresentation, List<string> words)
+        public static DatasetRepresentation ReconstructByKeepingOnlyTheseWords(this DatasetRepresentation datasetRepresentation, List<string> wordsToKeep)
         {
-            var documentCount = datasetRepresentation.Frequencies.GetLength(0);
-            var frequencies = new int[documentCount, words.Count];
+            var documentCount = datasetRepresentation.DocumentWordFrequencies.Count;
+            var documentWordFrequencies = new List<Dictionary<int, int>>();
 
-            for (int wordIndex = 0; wordIndex < words.Count; wordIndex++)
+            for (int documentIndex = 0; documentIndex < documentCount; documentIndex++)
             {
-                var indexOfWordInOldRepresentation = datasetRepresentation.Words.IndexOf(words[wordIndex]);
+                var frequency = new Dictionary<int, int>();
 
-                for (int documentIndex = 0; documentIndex < documentCount; documentIndex++)
+                for (int wordIndex = 0; wordIndex < wordsToKeep.Count; wordIndex++)
                 {
-                    var frequency = datasetRepresentation.Frequencies[documentIndex, indexOfWordInOldRepresentation];
-                    frequencies[documentIndex, wordIndex] = frequency;
+                    var indexOfWordInOldRepresentation = datasetRepresentation.Words.IndexOf(wordsToKeep[wordIndex]);
+                    var oldWordFrequency = datasetRepresentation.GetDocumentWordFrequency(documentIndex, indexOfWordInOldRepresentation);
+
+                    if (oldWordFrequency > 0)
+                    {
+                        frequency.Add(wordIndex, oldWordFrequency);
+                    }
                 }
             }
 
             return new DatasetRepresentation
             {
-                Words = new List<string>(words),
-                Frequencies = frequencies,
-                Topics = new List<List<string>>(datasetRepresentation.Topics)
+                Words = new List<string>(wordsToKeep),
+                DocumentWordFrequencies = documentWordFrequencies,
+                DocumentTopics = new List<List<string>>(datasetRepresentation.DocumentTopics)
             };
         }
 
-        public static DatasetRepresentation ReconstructByKeepingOnlyTheseFrequencies(this DatasetRepresentation datasetRepresentation, List<int> possibleFrequencyValues)
+        public static DatasetRepresentation ReconstructByKeepingOnlyTheseFrequencies(
+            this DatasetRepresentation datasetRepresentation,
+            List<int> possibleFrequencyValues,
+            int wordIndex)
         {
             var indexesOfDocumentsWithGivenFrequencyValues = new List<int>();
 
-            for (int documentIndex = 0; documentIndex < datasetRepresentation.Frequencies.GetLength(0); documentIndex++)
+            for (int documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
             {
-                for (int wordIndex = 0; wordIndex < datasetRepresentation.Words.Count; wordIndex++)
+                if (possibleFrequencyValues.Contains(datasetRepresentation.GetDocumentWordFrequency(documentIndex, wordIndex)))
                 {
-                    if (possibleFrequencyValues.Contains(datasetRepresentation.Frequencies[documentIndex, wordIndex]))
-                    {
-                        indexesOfDocumentsWithGivenFrequencyValues.Add(documentIndex);
-                        break;
-                    }
+                    indexesOfDocumentsWithGivenFrequencyValues.Add(documentIndex);
+                    break;
                 }
             }
 
-            var frequencies = new int[indexesOfDocumentsWithGivenFrequencyValues.Count, datasetRepresentation.Words.Count];
-            for (int newDocumentIndex = 0; newDocumentIndex < indexesOfDocumentsWithGivenFrequencyValues.Count; newDocumentIndex++)
+            var newDocumentWordFrequencies = new List<Dictionary<int, int>>();
+            foreach (var oldDocumentIndex in indexesOfDocumentsWithGivenFrequencyValues)
             {
-                var oldDocumentIndex = indexesOfDocumentsWithGivenFrequencyValues[newDocumentIndex];
-                for (int wordIndex = 0; wordIndex < datasetRepresentation.Words.Count; wordIndex++)
-                {
-                    var frequency = datasetRepresentation.Frequencies[oldDocumentIndex, wordIndex];
-                    frequencies[newDocumentIndex, wordIndex] = frequency;
-                }
+                newDocumentWordFrequencies.Add(datasetRepresentation.DocumentWordFrequencies[oldDocumentIndex]);
             }
 
             var topics = new List<List<string>>();
-            for (int topicIndex = 0; topicIndex < datasetRepresentation.Topics.Count; topicIndex++)
+            for (var oldDocumentIndex = 0; oldDocumentIndex < datasetRepresentation.DocumentTopics.Count; oldDocumentIndex++)
             {
-                if (indexesOfDocumentsWithGivenFrequencyValues.Contains(topicIndex))
+                if (indexesOfDocumentsWithGivenFrequencyValues.Contains(oldDocumentIndex))
                 {
-                    topics.Add(datasetRepresentation.Topics[topicIndex]);
+                    topics.Add(datasetRepresentation.DocumentTopics[oldDocumentIndex]);
                 }
             }
 
             return new DatasetRepresentation
             {
                 Words = datasetRepresentation.Words,
-                Frequencies = frequencies,
-                Topics = topics
+                DocumentWordFrequencies = newDocumentWordFrequencies,
+                DocumentTopics = topics
             };
         }
     }
