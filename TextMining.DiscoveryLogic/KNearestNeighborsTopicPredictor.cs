@@ -52,7 +52,7 @@ namespace TextMining.DiscoveryLogic
         private InputsOutputsPair GetInputsAndOutputsForDataset(DatasetRepresentation datasetRepresentation)
         {
             var rowCount = datasetRepresentation
-                .DocumentTopics
+                .DocumentTopicsLists
                 .Select(x => x.Count)
                 .Sum();
 
@@ -65,7 +65,7 @@ namespace TextMining.DiscoveryLogic
             for (int documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
             {
                 var documentFrequencies = datasetRepresentation.DocumentWordFrequencies[documentIndex];
-                var documentTopics = datasetRepresentation.DocumentTopics[documentIndex];
+                var documentTopics = datasetRepresentation.DocumentTopicsLists[documentIndex];
 
                 var inputRow = new double[columnCount];
                 for (var attributeIndex = 0; attributeIndex < columnCount; attributeIndex++)

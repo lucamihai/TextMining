@@ -17,7 +17,7 @@ namespace TextMining.FeatureSelectionLogic
 
             var datasetEntropy = GetDatasetEntropy(datasetRepresentation);
             var attributeAndInformationGainPairs = new Dictionary<string, double>();
-            double datasetDocumentCount = datasetRepresentation.DocumentTopics.Count;
+            double datasetDocumentCount = datasetRepresentation.DocumentTopicsLists.Count;
 
             for (var attributeIndex = 0; attributeIndex < datasetRepresentation.Words.Count; attributeIndex++)
             {
@@ -27,7 +27,7 @@ namespace TextMining.FeatureSelectionLogic
                 foreach (var possibleValue in possibleValues)
                 {
                     var subset = datasetRepresentation.ReconstructByKeepingOnlyTheseFrequencies(new List<int> {possibleValue}, attributeIndex);
-                    sum += (subset.DocumentTopics.Count / datasetDocumentCount) * GetDatasetEntropy(subset);
+                    sum += (subset.DocumentTopicsLists.Count / datasetDocumentCount) * GetDatasetEntropy(subset);
                 }
 
                 var attribute = datasetRepresentation.Words[attributeIndex];
@@ -42,11 +42,11 @@ namespace TextMining.FeatureSelectionLogic
         {
             var possibleTopics = datasetRepresentation.GetAllDistinctTopics();
             var sum = 0d;
-            double documentCount = datasetRepresentation.DocumentTopics.Count;
+            double documentCount = datasetRepresentation.DocumentTopicsLists.Count;
 
             foreach (var topic in possibleTopics)
             {
-                var documentsWithGivenTopic = datasetRepresentation.DocumentTopics.Count(x => x.Contains(topic));
+                var documentsWithGivenTopic = datasetRepresentation.DocumentTopicsLists.Count(x => x.Contains(topic));
                 var probability = documentsWithGivenTopic / documentCount;
                 sum += probability * Math.Log2(probability);
             }

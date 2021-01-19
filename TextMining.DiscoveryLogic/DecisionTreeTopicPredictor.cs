@@ -87,7 +87,7 @@ namespace TextMining.DiscoveryLogic
         private List<string[]> GetRowsForDocument(DatasetRepresentation datasetRepresentation, int documentIndex)
         {
             var documentFrequencies = datasetRepresentation.DocumentWordFrequencies[documentIndex];
-            var documentTopics = datasetRepresentation.DocumentTopics[documentIndex];
+            var documentTopics = datasetRepresentation.DocumentTopicsLists[documentIndex];
             var rows = new List<string[]>();
 
             foreach (var documentTopic in documentTopics)

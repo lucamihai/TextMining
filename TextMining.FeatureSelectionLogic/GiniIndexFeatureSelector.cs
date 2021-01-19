@@ -40,7 +40,7 @@ namespace TextMining.FeatureSelectionLogic
             foreach (var topic in allTopics)
             {
                 var documentsWithTopic = 0d;
-                foreach (var datasetRepresentationTopic in datasetRepresentation.DocumentTopics)
+                foreach (var datasetRepresentationTopic in datasetRepresentation.DocumentTopicsLists)
                 {
                     if (datasetRepresentationTopic.Contains(topic))
                     {

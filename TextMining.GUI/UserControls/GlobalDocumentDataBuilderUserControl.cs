@@ -100,6 +100,7 @@ namespace TextMining.GUI.UserControls
                 var listForValidation = lists.Item2;
 
                 var datasetRepresentation = listForTraining.ToDatasetRepresentation();
+                datasetRepresentation = datasetRepresentation.ReconstructByEliminatingWordsBelowAndAboveThresholds(5, 95);
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
                 var features = featureSelector.GetMostImportantWords(datasetRepresentation);

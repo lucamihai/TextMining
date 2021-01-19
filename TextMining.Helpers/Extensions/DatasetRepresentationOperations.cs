@@ -27,6 +27,39 @@ namespace TextMining.Helpers.Extensions
                 .ToList();
         }
 
+        public static DatasetRepresentation ReconstructByEliminatingWordsBelowAndAboveThresholds(
+            this DatasetRepresentation datasetRepresentation,
+            int lowerThresholdPercentage,
+            int upperThresholdPercentage)
+        {
+            var allWords = new List<string>(datasetRepresentation.Words);
+            var wordsToKeep = new List<string>();
+            double documentCount = datasetRepresentation.DocumentTopicsLists.Count;
+
+            for (var wordIndex = 0; wordIndex < allWords.Count; wordIndex++)
+            {
+                var word = allWords[wordIndex];
+                var documentsInWhichWordAppears = 0;
+
+                for (int documentIndex = 0; documentIndex < documentCount; documentIndex++)
+                {
+                    if (datasetRepresentation.GetDocumentWordFrequency(documentIndex, wordIndex) > 0)
+                    {
+                        documentsInWhichWordAppears++;
+                    }
+                }
+
+                var apparitionPercentage = documentsInWhichWordAppears * 100 / documentCount;
+
+                if (apparitionPercentage > lowerThresholdPercentage && apparitionPercentage < upperThresholdPercentage)
+                {
+                    wordsToKeep.Add(word);
+                }
+            }
+
+            return datasetRepresentation.ReconstructByKeepingOnlyTheseWords(wordsToKeep);
+        }
+
         public static DatasetRepresentation ReconstructByKeepingOnlyTheseWords(this DatasetRepresentation datasetRepresentation, List<string> wordsToKeep)
         {
             var documentCount = datasetRepresentation.DocumentWordFrequencies.Count;
@@ -54,7 +87,7 @@ namespace TextMining.Helpers.Extensions
             {
                 Words = new List<string>(wordsToKeep),
                 DocumentWordFrequencies = documentWordFrequencies,
-                DocumentTopics = new List<List<string>>(datasetRepresentation.DocumentTopics)
+                DocumentTopicsLists = new List<List<string>>(datasetRepresentation.DocumentTopicsLists)
             };
         }
 
@@ -81,11 +114,11 @@ namespace TextMining.Helpers.Extensions
             }
 
             var topics = new List<List<string>>();
-            for (var oldDocumentIndex = 0; oldDocumentIndex < datasetRepresentation.DocumentTopics.Count; oldDocumentIndex++)
+            for (var oldDocumentIndex = 0; oldDocumentIndex < datasetRepresentation.DocumentTopicsLists.Count; oldDocumentIndex++)
             {
                 if (indexesOfDocumentsWithGivenFrequencyValues.Contains(oldDocumentIndex))
                 {
-                    topics.Add(datasetRepresentation.DocumentTopics[oldDocumentIndex]);
+                    topics.Add(datasetRepresentation.DocumentTopicsLists[oldDocumentIndex]);
                 }
             }
 
@@ -93,7 +126,7 @@ namespace TextMining.Helpers.Extensions
             {
                 Words = datasetRepresentation.Words,
                 DocumentWordFrequencies = newDocumentWordFrequencies,
-                DocumentTopics = topics
+                DocumentTopicsLists = topics
             };
         }
 
@@ -124,7 +157,7 @@ namespace TextMining.Helpers.Extensions
 
             for (var documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
             {
-                if (datasetRepresentation.DocumentTopics[documentIndex].Count == 0)
+                if (datasetRepresentation.DocumentTopicsLists[documentIndex].Count == 0)
                 {
                     continue;
                 }
@@ -135,9 +168,9 @@ namespace TextMining.Helpers.Extensions
                     .ToList();
                 var pairsString = string.Join(',', formattedPairs);
 
-                for (int topicIndex = 0; topicIndex < datasetRepresentation.DocumentTopics[documentIndex].Count; topicIndex++)
+                for (int topicIndex = 0; topicIndex < datasetRepresentation.DocumentTopicsLists[documentIndex].Count; topicIndex++)
                 {
-                    stringBuilder.AppendLine($"{pairsString} # {datasetRepresentation.DocumentTopics[documentIndex][topicIndex]}");
+                    stringBuilder.AppendLine($"{pairsString} # {datasetRepresentation.DocumentTopicsLists[documentIndex][topicIndex]}");
                 }
             }
 

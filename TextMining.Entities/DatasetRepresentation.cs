@@ -9,11 +9,11 @@ namespace TextMining.Entities
     {
         public List<string> Words { get; set; }
         public List<Dictionary<int, int>> DocumentWordFrequencies { get; set; }
-        public List<List<string>> DocumentTopics { get; set; }
+        public List<List<string>> DocumentTopicsLists { get; set; }
 
         public List<string> GetAllDistinctTopics()
         {
-            return DocumentTopics
+            return DocumentTopicsLists
                 .SelectMany(x => x.Select(y => y))
                 .Distinct()
                 .ToList();

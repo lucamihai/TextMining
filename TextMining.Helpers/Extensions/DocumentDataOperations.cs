@@ -46,7 +46,7 @@ namespace TextMining.Helpers.Extensions
             {
                 Words = uniqueWords,
                 DocumentWordFrequencies = frequencies,
-                DocumentTopics = topics
+                DocumentTopicsLists = topics
             };
         }
     }
