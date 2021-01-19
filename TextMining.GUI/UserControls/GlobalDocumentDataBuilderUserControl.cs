@@ -95,10 +95,11 @@ namespace TextMining.GUI.UserControls
             try
             {
                 var documentDataList = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
-                var lastDocument = documentDataList[2];
-                documentDataList.Remove(lastDocument);
+                var lists = SplitListIntoTwoSeparateLists(documentDataList, 70);
+                var listForTraining = lists.Item1;
+                var listForValidation = lists.Item2;
 
-                var datasetRepresentation = documentDataList.ToDatasetRepresentation();
+                var datasetRepresentation = listForTraining.ToDatasetRepresentation();
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
                 var features = featureSelector.GetMostImportantWords(datasetRepresentation);
@@ -112,7 +113,21 @@ namespace TextMining.GUI.UserControls
                 File.WriteAllText("dataset.json", datasetJson);
                 File.WriteAllText("dataset.arff", datasetArff);
                 topicPredictor.Train(datasetRepresentation);
-                topicPredictor.PredictTopic(lastDocument);
+
+                double total = listForValidation.Count;
+                var successfullyPredicted = 0;
+                
+                foreach (var documentData in listForValidation)
+                {
+                    var predictedTopic = topicPredictor.PredictTopic(documentData);
+
+                    if (documentData.Topics.Contains(predictedTopic))
+                    {
+                        successfullyPredicted++;
+                    }
+                }
+
+                var accuracy = successfullyPredicted / total * 100;
 
                 //documentDataDisplayUserControl.DisplayDocumentData(documentData);
                 SetStatusLabel("Done", Color.GreenYellow);
@@ -133,6 +148,49 @@ namespace TextMining.GUI.UserControls
         {
             labelStatus.Text = text;
             labelStatus.ForeColor = color;
+        }
+
+        private static Tuple<List<T>, List<T>> SplitListIntoTwoSeparateLists<T>(List<T> list, int firstListPercentage)
+        {
+            var firstListItemCount = list.Count * firstListPercentage / 100;
+            var firstListIndexes = GenerateRandomNumbersInRange(firstListItemCount, 0, list.Count - 1);
+
+            var firstList = new List<T>();
+            var secondList = new List<T>();
+
+            for (int currentIndex = 0; currentIndex < list.Count; currentIndex++)
+            {
+                var currentItem = list[currentIndex];
+
+                if (firstListIndexes.Contains(currentIndex))
+                {
+                    firstList.Add(currentItem);
+                }
+                else
+                {
+                    secondList.Add(currentItem);
+                }
+            }
+
+            return new Tuple<List<T>, List<T>>(firstList, secondList);
+        }
+
+        private static List<int> GenerateRandomNumbersInRange(int desiredCount, int lowestPossibleNumber, int highestPossibleNumber)
+        {
+            var rng = new Random();
+            var numbers = new List<int>();
+
+            while (numbers.Count < desiredCount)
+            {
+                var generatedNumber = rng.Next(lowestPossibleNumber, highestPossibleNumber);
+
+                if (!numbers.Contains(generatedNumber))
+                {
+                    numbers.Add(generatedNumber);
+                }
+            }
+
+            return numbers;
         }
     }
 }
