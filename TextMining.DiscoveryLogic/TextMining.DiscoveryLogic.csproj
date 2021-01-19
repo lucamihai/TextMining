@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Accord.MachineLearning" Version="3.8.0" />
+    <PackageReference Include="PicNetML" Version="0.0.16" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TextMining.Entities\TextMining.Entities.csproj" />
     <ProjectReference Include="..\TextMining.Helpers\TextMining.Helpers.csproj" />
   </ItemGroup>

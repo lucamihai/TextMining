@@ -21,7 +21,7 @@ namespace TextMining.FeatureSelectionLogic
 
             for (var attributeIndex = 0; attributeIndex < datasetRepresentation.Words.Count; attributeIndex++)
             {
-                var possibleValues = GetPossibleValuesOfAttributeInDataset(datasetRepresentation, attributeIndex);
+                var possibleValues = datasetRepresentation.GetPossibleValuesOfAttributeInDataset(attributeIndex);
                 var sum = 0d;
 
                 foreach (var possibleValue in possibleValues)
@@ -52,24 +52,6 @@ namespace TextMining.FeatureSelectionLogic
             }
 
             return -sum;
-        }
-
-        private List<int> GetPossibleValuesOfAttributeInDataset(DatasetRepresentation datasetRepresentation, int attributeIndex)
-        {
-            var possibleValues = new List<int>();
-
-            for (int documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
-            {
-                var value = datasetRepresentation.GetDocumentWordFrequency(documentIndex, attributeIndex);
-                if (!possibleValues.Contains(value))
-                {
-                    possibleValues.Add(value);
-                }
-            }
-
-            return possibleValues
-                .OrderBy(x => x)
-                .ToList();
         }
 
         private List<string> GetTopAttributes(Dictionary<string, double> attributeAndInformationGainPairs, int topPercentage = 10)

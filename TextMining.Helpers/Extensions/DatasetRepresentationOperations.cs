@@ -1,8 +1,7 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using TextMining.Entities;
 
 namespace TextMining.Helpers.Extensions
@@ -10,6 +9,24 @@ namespace TextMining.Helpers.Extensions
     [ExcludeFromCodeCoverage]
     public static class DatasetRepresentationOperations
     {
+        public static List<int> GetPossibleValuesOfAttributeInDataset(this DatasetRepresentation datasetRepresentation, int attributeIndex)
+        {
+            var possibleValues = new List<int>();
+
+            for (int documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
+            {
+                var value = datasetRepresentation.GetDocumentWordFrequency(documentIndex, attributeIndex);
+                if (!possibleValues.Contains(value))
+                {
+                    possibleValues.Add(value);
+                }
+            }
+
+            return possibleValues
+                .OrderBy(x => x)
+                .ToList();
+        }
+
         public static DatasetRepresentation ReconstructByKeepingOnlyTheseWords(this DatasetRepresentation datasetRepresentation, List<string> wordsToKeep)
         {
             var documentCount = datasetRepresentation.DocumentWordFrequencies.Count;
@@ -29,6 +46,8 @@ namespace TextMining.Helpers.Extensions
                         frequency.Add(wordIndex, oldWordFrequency);
                     }
                 }
+
+                documentWordFrequencies.Add(frequency);
             }
 
             return new DatasetRepresentation
@@ -76,6 +95,53 @@ namespace TextMining.Helpers.Extensions
                 DocumentWordFrequencies = newDocumentWordFrequencies,
                 DocumentTopics = topics
             };
+        }
+
+        public static string ToArffFileFormat(this DatasetRepresentation datasetRepresentation)
+        {
+            var stringBuilder = new StringBuilder();
+            var topics = datasetRepresentation.GetAllDistinctTopics();
+
+            foreach (var attribute in datasetRepresentation.Words)
+            {
+                stringBuilder.AppendLine($"@attribute {attribute} NUMERIC");
+            }
+
+            stringBuilder.AppendLine();
+            var formattedTopics = topics
+                .Select(x => $"'{x}'")
+                .ToList();
+            stringBuilder.AppendLine(string.Join(", ", formattedTopics));
+            stringBuilder.AppendLine();
+
+            foreach (var topic in topics)
+            {
+                stringBuilder.AppendLine($"@topics {topic}");
+            }
+
+            stringBuilder.AppendLine();
+            stringBuilder.AppendLine("@data");
+
+            for (var documentIndex = 0; documentIndex < datasetRepresentation.DocumentWordFrequencies.Count; documentIndex++)
+            {
+                if (datasetRepresentation.DocumentTopics[documentIndex].Count == 0)
+                {
+                    continue;
+                }
+
+                var datasetRepresentationDocumentWordFrequency = datasetRepresentation.DocumentWordFrequencies[documentIndex];
+                var formattedPairs = datasetRepresentationDocumentWordFrequency
+                    .Select(x => $"{x.Key}:{x.Value}")
+                    .ToList();
+                var pairsString = string.Join(',', formattedPairs);
+
+                for (int topicIndex = 0; topicIndex < datasetRepresentation.DocumentTopics[documentIndex].Count; topicIndex++)
+                {
+                    stringBuilder.AppendLine($"{pairsString} # {datasetRepresentation.DocumentTopics[documentIndex][topicIndex]}");
+                }
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

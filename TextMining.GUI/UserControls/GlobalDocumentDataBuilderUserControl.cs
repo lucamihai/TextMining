@@ -95,6 +95,9 @@ namespace TextMining.GUI.UserControls
             try
             {
                 var documentDataList = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filepathsToUseForDocumentData);
+                var lastDocument = documentDataList[2];
+                documentDataList.Remove(lastDocument);
+
                 var datasetRepresentation = documentDataList.ToDatasetRepresentation();
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
@@ -105,8 +108,11 @@ namespace TextMining.GUI.UserControls
                 
                 datasetRepresentation = datasetRepresentation.ReconstructByKeepingOnlyTheseWords(features);
                 var datasetJson = JsonConvert.SerializeObject(datasetRepresentation);
+                var datasetArff = datasetRepresentation.ToArffFileFormat();
                 File.WriteAllText("dataset.json", datasetJson);
+                File.WriteAllText("dataset.arff", datasetArff);
                 topicPredictor.Train(datasetRepresentation);
+                topicPredictor.PredictTopic(lastDocument);
 
                 //documentDataDisplayUserControl.DisplayDocumentData(documentData);
                 SetStatusLabel("Done", Color.GreenYellow);

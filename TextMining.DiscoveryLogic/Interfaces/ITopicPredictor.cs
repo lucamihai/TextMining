@@ -6,6 +6,6 @@ namespace TextMining.DiscoveryLogic.Interfaces
     public interface ITopicPredictor
     {
         void Train(DatasetRepresentation datasetRepresentation);
-        string PredictTopic(List<string> words);
+        string PredictTopic(DocumentData documentData);
     }
 }

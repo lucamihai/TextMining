@@ -29,7 +29,10 @@ namespace TextMining.DI
 
             //services.AddScoped<IFeatureSelector, GiniIndexFeatureSelector>();
             services.AddScoped<IFeatureSelector, InformationGainFeatureSelector>();
-            services.AddScoped<ITopicPredictor, TopicPredictor>();
+
+            //services.AddScoped<ITopicPredictor, DecisionTreeTopicPredictor>();
+            //services.AddScoped<ITopicPredictor, WekaTopicPredictor>();
+            services.AddScoped<ITopicPredictor, KNearestNeighborsTopicPredictor>();
 
             services.AddScoped<IStemmingService, StemmingService>();
             services.AddScoped<IFileService, FileService>();
