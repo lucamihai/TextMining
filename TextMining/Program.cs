@@ -29,52 +29,94 @@ namespace TextMining
             var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
             documentDataBusinessLogic = serviceProvider.GetService<IDocumentDataBusinessLogic>();
             
-
-            //ConsoleWriteLineWithColor("You can quit the program when no tasks are running by entering q or Q and then pressing enter", ConsoleColor.White);
             var selectedDirectory = HandleDirectorySelection();
             var selectedRunCount = HandleRunCountSelection();
             var filePathsToUseForDocumentData = new List<string>();
             filePathsToUseForDocumentData.AddRange(Directory.GetFiles(selectedDirectory));
-            var accuracies = new ConcurrentBag<double>();
+            
             var documentDataList = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filePathsToUseForDocumentData);
+            var averageAccuracies = new Dictionary<int, double>();
+            var lowestAccuracies = new Dictionary<int, double>();
+            var highestAccuracies = new Dictionary<int, double>();
 
-            Parallel.For(0, selectedRunCount, new ParallelOptions { MaxDegreeOfParallelism = 3 }, (runNumber) =>
+            for (int currentK = KNearestNeighborsTopicPredictor.K; currentK < 100; currentK += 10)
             {
-                var featureSelector = serviceProvider.GetService<IFeatureSelector>();
-                var topicPredictor = new KNearestNeighborsTopicPredictor();
+                var accuracies = new ConcurrentBag<double>();
+                var lowestAccuracy = double.MaxValue;
+                var biggestAccuracy = double.MinValue;
 
-                var lists = SplitListIntoTwoSeparateLists(documentDataList, 70);
-                var listForTraining = lists.Item1;
-                var listForValidation = lists.Item2;
-
-                var datasetRepresentationTraining = listForTraining.ToDatasetRepresentation();
-                datasetRepresentationTraining = datasetRepresentationTraining.ReconstructByEliminatingWordsBelowAndAboveThresholds(5, 95);
-
-                var features = featureSelector.GetMostImportantWords(datasetRepresentationTraining);
-                datasetRepresentationTraining = datasetRepresentationTraining.ReconstructByKeepingOnlyTheseWords(features);
-
-                topicPredictor.Train(datasetRepresentationTraining);
-
-                double total = listForValidation.Count;
-                var successfullyPredicted = 0;
-
-                foreach (var documentData in listForValidation)
+                Parallel.For(0, selectedRunCount, new ParallelOptions { MaxDegreeOfParallelism = 5 }, (runNumber) =>
                 {
-                    var predictedTopic = topicPredictor.PredictTopic(documentData);
+                    var featureSelector = serviceProvider.GetService<IFeatureSelector>();
+                    var topicPredictor = new KNearestNeighborsTopicPredictor();
 
-                    if (documentData.Topics.Contains(predictedTopic))
+                    var lists = SplitListIntoTwoSeparateLists(documentDataList, 70);
+                    var listForTraining = lists.Item1;
+                    var listForValidation = lists.Item2;
+
+                    var datasetRepresentationTraining = listForTraining.ToDatasetRepresentation();
+                    datasetRepresentationTraining = datasetRepresentationTraining.ReconstructByEliminatingWordsBelowAndAboveThresholds(5, 95);
+
+                    var features = featureSelector.GetMostImportantWords(datasetRepresentationTraining);
+                    datasetRepresentationTraining = datasetRepresentationTraining.ReconstructByKeepingOnlyTheseWords(features);
+
+                    topicPredictor.Train(datasetRepresentationTraining);
+
+                    double total = listForValidation.Count;
+                    var successfullyPredicted = 0;
+
+                    foreach (var documentData in listForValidation)
                     {
-                        successfullyPredicted++;
-                    }
-                }
+                        var predictedTopic = topicPredictor.PredictTopic(documentData);
 
-                var accuracy = successfullyPredicted / total * 100;
-                accuracies.Add(accuracy);
-                ConsoleWriteLineWithColor($"Accuracy for run {runNumber}: {accuracy}");
-            });
+                        if (documentData.Topics.Contains(predictedTopic))
+                        {
+                            successfullyPredicted++;
+                        }
+                    }
+
+                
+                    var accuracy = successfullyPredicted / total * 100;
+                    accuracies.Add(accuracy);
+                    //ConsoleWriteLineWithColor($"Accuracy for run {runNumber}: {accuracy}");
+
+                    if (accuracy < lowestAccuracy)
+                    {
+                        lowestAccuracy = accuracy;
+                    }
+                    if (accuracy > biggestAccuracy)
+                    {
+                        biggestAccuracy = accuracy;
+                    }
+                });
+
+                var averageAccuracy = accuracies.Sum() / accuracies.Count;
+                averageAccuracies.Add(currentK, averageAccuracy);
+                lowestAccuracies.Add(currentK, lowestAccuracy);
+                highestAccuracies.Add(currentK, biggestAccuracy);
+
+                ConsoleWriteLineWithColor($"Finished processing k = {currentK}");
+                //ConsoleWriteLineWithColor("----------------------------------------------------------");
+                //ConsoleWriteLineWithColor($"Average accuracy = {averageAccuracy}");
+                //ConsoleWriteLineWithColor($"Lowest accuracy = {lowestAccuracy}");
+                //ConsoleWriteLineWithColor($"Biggest accuracy = {biggestAccuracy}");
+            }
 
             ConsoleWriteLineWithColor("----------------------------------------------------------");
-            ConsoleWriteLineWithColor($"Average accuracy = {accuracies.Sum() / accuracies.Count}");
+            PrintStatistics(averageAccuracies, lowestAccuracies, highestAccuracies);
+        }
+
+        private static void PrintStatistics(Dictionary<int, double> averageAccuracies, Dictionary<int, double> lowestAccuracies, Dictionary<int, double> highestAccuracies)
+        {
+            ConsoleWriteLineWithColor("k\t|av\t|lo\t|hi\t");
+            foreach (var k in averageAccuracies.Keys)
+            {
+                var average = Math.Round(averageAccuracies[k], 2);
+                var lowest = Math.Round(lowestAccuracies[k], 2);
+                var highest = Math.Round(highestAccuracies[k], 2);
+                var message = $"{k}\t{average}\t{lowest}\t{highest}";
+                ConsoleWriteLineWithColor(message);
+            }
         }
 
         private static string HandleDirectorySelection()

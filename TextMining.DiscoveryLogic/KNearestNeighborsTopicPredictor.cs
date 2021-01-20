@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Accord.MachineLearning;
+using Accord.Math.Distances;
 using TextMining.DiscoveryLogic.Interfaces;
 using TextMining.Entities;
 using TextMining.Helpers;
@@ -8,6 +9,7 @@ namespace TextMining.DiscoveryLogic
 {
     public class KNearestNeighborsTopicPredictor : ITopicPredictor
     {
+        public static int K = 1;
         private KNearestNeighbors kNearestNeighbors;
         private DatasetRepresentation datasetUsedForTraining;
 
@@ -17,8 +19,8 @@ namespace TextMining.DiscoveryLogic
 
             datasetUsedForTraining = datasetRepresentation;
             var inputsOutputsPair = GetInputsAndOutputsForDataset(datasetRepresentation);
-            var k = datasetRepresentation.GetAllDistinctTopics().Count;
-            kNearestNeighbors = new KNearestNeighbors(k);
+            //var k = datasetRepresentation.GetAllDistinctTopics().Count;
+            kNearestNeighbors = new KNearestNeighbors(K);
             kNearestNeighbors.Learn(inputsOutputsPair.Inputs, inputsOutputsPair.Outputs);
         }
 
@@ -87,6 +89,8 @@ namespace TextMining.DiscoveryLogic
                 Outputs = outputs
             };
         }
+
+
 
         private class InputsOutputsPair
         {
