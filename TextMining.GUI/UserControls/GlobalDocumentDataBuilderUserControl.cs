@@ -99,21 +99,24 @@ namespace TextMining.GUI.UserControls
                 var listForTraining = lists.Item1;
                 var listForValidation = lists.Item2;
 
-                var datasetRepresentation = listForTraining.ToDatasetRepresentation();
-                datasetRepresentation = datasetRepresentation.ReconstructByEliminatingWordsBelowAndAboveThresholds(5, 95);
+                var datasetRepresentationTraining = documentDataList.ToDatasetRepresentation();
+                datasetRepresentationTraining = datasetRepresentationTraining.ReconstructByEliminatingWordsBelowAndAboveThresholds(5, 95);
+
                 var stopwatch = new Stopwatch();
                 stopwatch.Start();
-                var features = featureSelector.GetMostImportantWords(datasetRepresentation);
+                var features = featureSelector.GetMostImportantWords(datasetRepresentationTraining);
                 stopwatch.Stop();
+
                 var featuresJson = JsonConvert.SerializeObject(features);
                 File.WriteAllText("features.json", featuresJson);
                 
-                datasetRepresentation = datasetRepresentation.ReconstructByKeepingOnlyTheseWords(features);
-                var datasetJson = JsonConvert.SerializeObject(datasetRepresentation);
-                var datasetArff = datasetRepresentation.ToArffFileFormat();
+                datasetRepresentationTraining = datasetRepresentationTraining.ReconstructByKeepingOnlyTheseWords(features);
+                var datasetJson = JsonConvert.SerializeObject(datasetRepresentationTraining);
+                var datasetArff = datasetRepresentationTraining.ToArffFileFormat();
                 File.WriteAllText("dataset.json", datasetJson);
                 File.WriteAllText("dataset.arff", datasetArff);
-                topicPredictor.Train(datasetRepresentation);
+
+                topicPredictor.Train(datasetRepresentationTraining);
 
                 double total = listForValidation.Count;
                 var successfullyPredicted = 0;

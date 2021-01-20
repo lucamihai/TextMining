@@ -58,6 +58,10 @@ namespace TextMining.FeatureSelectionLogic
         {
             var entryCount = attributeAndInformationGainPairs.Count;
             var topEntryCount = entryCount * topPercentage / 100;
+            var sorted = attributeAndInformationGainPairs
+                .OrderByDescending(x => x.Value)
+                .Select(x => new {Key = x.Key, Value = x.Value})
+                .ToList();
 
             return attributeAndInformationGainPairs
                 .OrderByDescending(x => x.Value)

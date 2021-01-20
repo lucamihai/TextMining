@@ -103,7 +103,6 @@ namespace TextMining.Helpers.Extensions
                 if (possibleFrequencyValues.Contains(datasetRepresentation.GetDocumentWordFrequency(documentIndex, wordIndex)))
                 {
                     indexesOfDocumentsWithGivenFrequencyValues.Add(documentIndex);
-                    break;
                 }
             }
 

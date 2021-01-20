@@ -56,6 +56,8 @@ namespace TextMining.DocumentDataLogic.Services
 
         private void OnWordEnded(ref string word, TextData textData)
         {
+            word = word.ToLower();
+
             if (!stopWords.Contains(word))
             {
                 if (word.StringHasAtLeastOneConnectingCharacter())
@@ -77,7 +79,17 @@ namespace TextMining.DocumentDataLogic.Services
 
         private void AddWordIfValid(string word, TextData textData)
         {
+            if (word.Contains("the"))
+            {
+
+            }
+
             if (!IsValidWord(word))
+            {
+                return;
+            }
+
+            if (stopWords.Contains(word))
             {
                 return;
             }
@@ -94,7 +106,7 @@ namespace TextMining.DocumentDataLogic.Services
 
         private bool IsValidWord(string word)
         {
-            return word.Length != 0
+            return word.Length > 2
                    && word.StringHasAtLeastOneLetter()
                    && !stopWords.Contains(word);
         }
