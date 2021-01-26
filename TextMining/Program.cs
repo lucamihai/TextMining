@@ -18,8 +18,6 @@ namespace TextMining
     [ExcludeFromCodeCoverage]
     internal class Program
     {
-        private const string smallSampleDirectoryPath = @"D:\Projects\TextMining\Resources\Reuters_34\Training\";
-        private const string bigSampleDirectoryPath = @"D:\Projects\TextMining\Resources\Reuters_7083\Training\";
         private static IDocumentDataBusinessLogic documentDataBusinessLogic;
         private static ITopicPredictorEvaluator topicPredictorEvaluator;
 
@@ -78,24 +76,27 @@ namespace TextMining
 
         private static string HandleDirectorySelection()
         {
-            ConsoleWriteLineWithColor("Select which set should be used: ");
-            ConsoleWriteLineWithColor($"1. {smallSampleDirectoryPath}");
-            ConsoleWriteLineWithColor($"2. {bigSampleDirectoryPath}");
+            ConsoleWriteLineWithColor("Enter the directory containing the XML articles");
 
             while (true)
             {
+                Console.Write("input: ");
                 var userInput = Console.ReadLine();
+                Console.WriteLine();
 
-                if (Convert.ToInt32(userInput) == 1)
+                if (string.IsNullOrEmpty(userInput))
                 {
-                    return smallSampleDirectoryPath;
-                }
-                else if (Convert.ToInt32(userInput) == 2)
-                {
-                    return bigSampleDirectoryPath;
+                    ConsoleWriteLineWithColor("Invalid input. Must provide a valid directory path.", ConsoleColor.DarkRed);
+                    continue;
                 }
 
-                ConsoleWriteLineWithColor("Invalid input. Must provide either 1 or 2.", ConsoleColor.DarkRed);
+                if (!Directory.Exists(userInput))
+                {
+                    ConsoleWriteLineWithColor("Invalid input. Given directory could not be found.", ConsoleColor.DarkRed);
+                    continue;
+                }
+
+                return userInput;
             }
         }
 
@@ -105,14 +106,16 @@ namespace TextMining
 
             while (true)
             {
+                Console.Write("input: ");
                 var userInput = Console.ReadLine();
+                Console.WriteLine();
 
                 if (int.TryParse(userInput, out var count) && count >= 1)
                 {
                     return count;
                 }
 
-                ConsoleWriteLineWithColor("Invalid input. Must provide a number greater or equal than 1.", ConsoleColor.DarkRed);
+                ConsoleWriteLineWithColor("Invalid input. Must provide a number greater than or equal to 1.", ConsoleColor.DarkRed);
             }
         }
 
