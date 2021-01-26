@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Accord.MachineLearning" Version="3.8.0" />
-    <PackageReference Include="PicNetML" Version="0.0.16" />
   </ItemGroup>
 
   <ItemGroup>

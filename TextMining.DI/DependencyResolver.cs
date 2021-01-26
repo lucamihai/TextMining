@@ -33,7 +33,6 @@ namespace TextMining.DI
             services.AddScoped<IFeatureSelector, InformationGainFeatureSelector>();
 
             //services.AddScoped<ITopicPredictor, DecisionTreeTopicPredictor>();
-            //services.AddScoped<ITopicPredictor, WekaTopicPredictor>();
             services.AddScoped<ITopicPredictor, KNearestNeighborsTopicPredictor>();
 
             services.AddScoped<ITopicPredictorEvaluator, TopicPredictorEvaluator>();

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NaiveBayes.Classification" Version="1.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TextMining.Entities\TextMining.Entities.csproj" />
     <ProjectReference Include="..\TextMining.Helpers\TextMining.Helpers.csproj" />
   </ItemGroup>
