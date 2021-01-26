@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -10,10 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.DI;
 using TextMining.DiscoveryLogic;
-using TextMining.DiscoveryLogic.Interfaces;
+using TextMining.EvaluationLogic.Interfaces;
 using TextMining.FeatureSelectionLogic.Interfaces;
 using TextMining.Helpers.Extensions;
-using TextMining.Helpers.Interfaces;
 
 namespace TextMining
 {
@@ -23,14 +21,14 @@ namespace TextMining
         private const string smallSampleDirectoryPath = @"D:\Projects\TextMining\Resources\Reuters_34\Training\";
         private const string bigSampleDirectoryPath = @"D:\Projects\TextMining\Resources\Reuters_7083\Training\";
         private static IDocumentDataBusinessLogic documentDataBusinessLogic;
+        private static ITopicPredictorEvaluator topicPredictorEvaluator;
 
         private static void Main(string[] args)
         {
             var serviceProvider = DependencyResolver.GetServices().BuildServiceProvider();
             documentDataBusinessLogic = serviceProvider.GetService<IDocumentDataBusinessLogic>();
-            
+            topicPredictorEvaluator = serviceProvider.GetService<ITopicPredictorEvaluator>();
 
-            //ConsoleWriteLineWithColor("You can quit the program when no tasks are running by entering q or Q and then pressing enter", ConsoleColor.White);
             var selectedDirectory = HandleDirectorySelection();
             var selectedRunCount = HandleRunCountSelection();
             var filePathsToUseForDocumentData = new List<string>();
@@ -54,6 +52,7 @@ namespace TextMining
                 datasetRepresentationTraining = datasetRepresentationTraining.ReconstructByKeepingOnlyTheseWords(features);
 
                 topicPredictor.Train(datasetRepresentationTraining);
+                var evaluationResults = topicPredictorEvaluator.EvaluateTopicPredictor(topicPredictor, listForValidation);
 
                 double total = listForValidation.Count;
                 var successfullyPredicted = 0;
@@ -83,11 +82,9 @@ namespace TextMining
             ConsoleWriteLineWithColor($"1. {smallSampleDirectoryPath}");
             ConsoleWriteLineWithColor($"2. {bigSampleDirectoryPath}");
 
-            var userInput = string.Empty;
-
             while (true)
             {
-                userInput = Console.ReadLine();
+                var userInput = Console.ReadLine();
 
                 if (Convert.ToInt32(userInput) == 1)
                 {
@@ -106,11 +103,9 @@ namespace TextMining
         {
             ConsoleWriteLineWithColor("How many times should the task run?");
 
-            var userInput = string.Empty;
-
             while (true)
             {
-                userInput = Console.ReadLine();
+                var userInput = Console.ReadLine();
 
                 if (int.TryParse(userInput, out var count) && count >= 1)
                 {

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TextMining.Entities;
+﻿using TextMining.Entities;
 
 namespace TextMining.DiscoveryLogic.Interfaces
 {

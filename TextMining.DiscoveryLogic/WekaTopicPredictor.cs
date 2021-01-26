@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using java.util;
+﻿using java.util;
 using PicNetML;
 using TextMining.DiscoveryLogic.Interfaces;
 using TextMining.Entities;

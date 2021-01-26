@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TextMining.DiscoveryLogic\TextMining.DiscoveryLogic.csproj" />
+    <ProjectReference Include="..\TextMining.Entities\TextMining.Entities.csproj" />
+  </ItemGroup>
+
+</Project>

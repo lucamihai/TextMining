@@ -79,11 +79,6 @@ namespace TextMining.DocumentDataLogic.Services
 
         private void AddWordIfValid(string word, TextData textData)
         {
-            if (word.Contains("the"))
-            {
-
-            }
-
             if (!IsValidWord(word))
             {
                 return;
@@ -100,7 +95,7 @@ namespace TextMining.DocumentDataLogic.Services
             }
             else
             {
-                textData.WordDictionary.AddWordToDictionary(stemmingService.GetStemmedWord(word));
+                textData.WordDictionary.AddWordToDictionary(stemmingService.GetStemmedWord(word.ToLower()));
             }
         }
 

@@ -17,7 +17,7 @@ namespace TextMining.DiscoveryLogic
 
             datasetUsedForTraining = datasetRepresentation;
             var inputsOutputsPair = GetInputsAndOutputsForDataset(datasetRepresentation);
-            var k = datasetRepresentation.GetAllDistinctTopics().Count;
+            var k = 61;
             kNearestNeighbors = new KNearestNeighbors(k);
             kNearestNeighbors.Learn(inputsOutputsPair.Inputs, inputsOutputsPair.Outputs);
         }

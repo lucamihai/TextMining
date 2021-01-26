@@ -8,6 +8,8 @@ using TextMining.DocumentDataLogic;
 using TextMining.DocumentDataLogic.Interfaces;
 using TextMining.DocumentDataLogic.Interfaces.Services;
 using TextMining.DocumentDataLogic.Services;
+using TextMining.EvaluationLogic;
+using TextMining.EvaluationLogic.Interfaces;
 using TextMining.FeatureSelectionLogic;
 using TextMining.FeatureSelectionLogic.Interfaces;
 using TextMining.Helpers;
@@ -33,6 +35,8 @@ namespace TextMining.DI
             //services.AddScoped<ITopicPredictor, DecisionTreeTopicPredictor>();
             //services.AddScoped<ITopicPredictor, WekaTopicPredictor>();
             services.AddScoped<ITopicPredictor, KNearestNeighborsTopicPredictor>();
+
+            services.AddScoped<ITopicPredictorEvaluator, TopicPredictorEvaluator>();
 
             services.AddScoped<IStemmingService, StemmingService>();
             services.AddScoped<IFileService, FileService>();
