@@ -6,11 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using TextMining.BusinessLogic.Interfaces;
 using TextMining.DI;
 using TextMining.DiscoveryLogic;
+using TextMining.Entities;
 using TextMining.EvaluationLogic.Interfaces;
 using TextMining.FeatureSelectionLogic.Interfaces;
+using TextMining.Helpers;
 using TextMining.Helpers.Extensions;
 
 namespace TextMining
@@ -29,10 +32,8 @@ namespace TextMining
 
             var selectedDirectory = HandleDirectorySelection();
             var selectedRunCount = HandleRunCountSelection();
-            var filePathsToUseForDocumentData = new List<string>();
-            filePathsToUseForDocumentData.AddRange(Directory.GetFiles(selectedDirectory));
+            var documentDataList = HandleDocumentDataListProcessing(selectedDirectory);
             var accuracies = new ConcurrentBag<double>();
-            var documentDataList = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filePathsToUseForDocumentData);
 
             Parallel.For(0, selectedRunCount, new ParallelOptions { MaxDegreeOfParallelism = 3 }, (runNumber) =>
             {
@@ -78,45 +79,62 @@ namespace TextMining
         {
             ConsoleWriteLineWithColor("Enter the directory containing the XML articles");
 
-            while (true)
-            {
-                Console.Write("input: ");
-                var userInput = Console.ReadLine();
-                Console.WriteLine();
-
-                if (string.IsNullOrEmpty(userInput))
-                {
-                    ConsoleWriteLineWithColor("Invalid input. Must provide a valid directory path.", ConsoleColor.DarkRed);
-                    continue;
-                }
-
-                if (!Directory.Exists(userInput))
-                {
-                    ConsoleWriteLineWithColor("Invalid input. Given directory could not be found.", ConsoleColor.DarkRed);
-                    continue;
-                }
-
-                return userInput;
-            }
+            return UserInputHandler.GetPathInputFromUser();
         }
 
         private static int HandleRunCountSelection()
         {
             ConsoleWriteLineWithColor("How many times should the task run?");
 
-            while (true)
+            return UserInputHandler.GetNumberInputFromUser();
+        }
+
+        private static List<DocumentData> HandleDocumentDataListProcessing(string selectedDirectory)
+        {
+            var processedDocumentDataListJsonPath = Path.Combine(selectedDirectory, "document_data_list.json");
+            var processedDocumentDataListJsonFileExists = File.Exists(processedDocumentDataListJsonPath);
+
+            if (processedDocumentDataListJsonFileExists)
             {
-                Console.Write("input: ");
-                var userInput = Console.ReadLine();
-                Console.WriteLine();
+                ConsoleWriteLineWithColor($"Found processed documents file at '{processedDocumentDataListJsonPath}'");
+                ConsoleWriteLineWithColor("Would you like to use that in order to skip the processing step?");
+                ConsoleWriteLineWithColor("1. Yes");
+                ConsoleWriteLineWithColor("2. No");
 
-                if (int.TryParse(userInput, out var count) && count >= 1)
+                var selectedOption = UserInputHandler.GetNumberInputFromUser(new List<int> {1, 2});
+                if (selectedOption == 1)
                 {
-                    return count;
-                }
+                    var processedDocumentDataListJson = File.ReadAllText(processedDocumentDataListJsonPath);
+                    var processedDocumentDataList = JsonConvert.DeserializeObject<List<DocumentData>>(processedDocumentDataListJson);
 
-                ConsoleWriteLineWithColor("Invalid input. Must provide a number greater than or equal to 1.", ConsoleColor.DarkRed);
+                    return processedDocumentDataList;
+                }
             }
+
+            var filePathsToUseForDocumentData = new List<string>();
+            filePathsToUseForDocumentData.AddRange(Directory.GetFiles(selectedDirectory));
+            var documentDataList = documentDataBusinessLogic.GetDocumentDataForMultipleXmlFiles(filePathsToUseForDocumentData);
+
+            if (processedDocumentDataListJsonFileExists)
+            {
+                ConsoleWriteLineWithColor("Overwrite existing processed documents file?");
+                ConsoleWriteLineWithColor("1. Yes");
+                ConsoleWriteLineWithColor("2. No");
+
+                var selectedOption = UserInputHandler.GetNumberInputFromUser(new List<int> { 1, 2 });
+                if (selectedOption == 1)
+                {
+                    var documentDataListJson = JsonConvert.SerializeObject(documentDataList);
+                    File.WriteAllText(processedDocumentDataListJsonPath, documentDataListJson);
+                }
+            }
+            else
+            {
+                var documentDataListJson = JsonConvert.SerializeObject(documentDataList);
+                File.WriteAllText(processedDocumentDataListJsonPath, documentDataListJson);
+            }
+
+            return documentDataList;
         }
 
         private static void ConsoleWriteLineWithColor(string message, ConsoleColor consoleColor = ConsoleColor.Gray)
